@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>EC1 – Teaching &amp; Learning Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -13,56 +15,78 @@
   --green:#16a34a;--amber:#d97706;--red:#dc2626;
   --gbg:#dcfce7;--abg:#fef3c7;--rbg:#fee2e2;
   --r:10px;
+  --sidebar-w:220px;
 }
-body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
+body{font-family:'Poppins',-apple-system,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;display:flex;flex-direction:row;}
 
-/* ══ TOP HEADER ══ */
-.top-hdr{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a5276 100%);color:#fff;}
-.hdr-inner{max-width:1200px;margin:0 auto;padding:18px 24px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;}
-.hdr-left{display:flex;align-items:center;gap:13px;}
-.inst-logo{background:rgba(255,255,255,.95);border-radius:9px;padding:4px 7px;display:flex;align-items:center;}
-.inst-logo img{height:46px;width:auto;display:block;object-fit:contain;}
-.inst-logo-fb{height:46px;width:46px;background:var(--teal);border-radius:7px;display:none;align-items:center;justify-content:center;}
-.inst-logo-fb svg{width:26px;height:26px;}
-.hdr-text .inst{font-size:10.5px;font-weight:700;opacity:.72;letter-spacing:.3px;text-transform:uppercase;}
-.hdr-text .dept{font-size:12px;font-weight:600;opacity:.88;}
-.hdr-text .ttl{font-size:19px;font-weight:700;letter-spacing:-.3px;margin-top:1px;}
-.hdr-text .sub{font-size:11px;opacity:.7;}
-.hdr-meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
-.bmeta{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:3px 10px;font-size:11.5px;white-space:nowrap;}
+/* ══ LEFT SIDEBAR NAV ══ */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:linear-gradient(180deg,var(--navy) 0%,#0f3060 60%,#0d2b55 100%);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
+.sb-brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+.sb-logo{background:#fff;border-radius:10px;padding:8px 10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.sb-logo img{width:130px;height:auto;display:block;object-fit:contain;}
+.sb-logo-fb{width:130px;height:44px;background:var(--teal);border-radius:7px;display:none;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;}
+.sb-title{color:#fff;font-size:13px;font-weight:700;letter-spacing:-.2px;line-height:1.3;}
+.sb-sub{color:rgba(255,255,255,.55);font-size:10px;margin-top:3px;line-height:1.4;}
+.sb-nav{flex:1;padding:12px 10px;}
+.sb-section{font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35);padding:10px 8px 5px;}
+.nav-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border:none;background:none;border-radius:8px;margin-bottom:2px;transition:background .15s,color .15s;text-align:left;white-space:nowrap;}
+.nav-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+.nav-btn.active{background:rgba(13,143,143,.35);color:#fff;border-left:3px solid var(--teal2);}
+.nav-btn .nav-ic{font-size:16px;flex-shrink:0;}
+.sb-footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.35);line-height:1.5;}
 
-/* ══ NAV BAR ══ */
-nav{background:var(--navy2);border-bottom:2px solid var(--teal);}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:stretch;padding:0 16px;gap:2px;}
-.nav-btn{display:flex;align-items:center;gap:7px;padding:11px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;}
-.nav-btn:hover{color:#fff;}
-.nav-btn.active{color:#fff;border-bottom-color:var(--teal2);}
-.nav-btn .nav-ic{font-size:15px;}
-@media(max-width:600px){.nav-btn{padding:10px 10px;font-size:12px;}.nav-btn span.nav-lbl{display:none;}}
+/* ══ MAIN CONTENT AREA ══ */
+.main-wrap{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;}
+
+/* ══ TOP BANNER ══ */
+.top-banner{background:linear-gradient(135deg,#0d2b55 0%,#0a4a7a 45%,#0d8f8f 100%);color:#fff;padding:0;overflow:hidden;position:relative;}
+.banner-inner{padding:28px 36px 24px;position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+/* circuit SVG decoration */
+.banner-deco{position:absolute;right:0;top:0;bottom:0;width:340px;opacity:.13;pointer-events:none;overflow:hidden;}
+.banner-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(13,179,179,.35);border:1px solid rgba(13,179,179,.5);color:rgba(255,255,255,.9);border-radius:20px;padding:3px 12px;margin-bottom:10px;}
+.banner-course{font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-bottom:6px;}
+.banner-course span{color:var(--teal2);}
+.banner-dept{font-size:13px;font-weight:600;opacity:.8;margin-bottom:14px;}
+.banner-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.banner-pill{font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(4px);}
+.banner-stats{display:flex;gap:16px;flex-wrap:wrap;}
+.b-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 20px;text-align:center;min-width:80px;backdrop-filter:blur(4px);}
+.b-stat-num{font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1;}
+.b-stat-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,.65);margin-top:3px;text-transform:uppercase;letter-spacing:.4px;}
 
 /* ══ PAGE WRAPPER ══ */
-.page-wrap{flex:1;max-width:1200px;margin:0 auto;width:100%;padding:22px 24px;}
+.page-wrap{flex:1;padding:22px 28px;}
 .page{display:none;}.page.active{display:block;}
+
+/* responsive sidebar collapse */
+@media(max-width:820px){
+  .sidebar{width:60px;}
+  .sb-brand{padding:14px 10px;}
+  .sb-logo,.sb-logo-fb{width:40px;}
+  .sb-title,.sb-sub,.sb-section,.sb-footer{display:none;}
+  .nav-btn .nav-lbl{display:none;}
+  .nav-btn{justify-content:center;padding:10px;}
+  .main-wrap{margin-left:60px;}
+  .banner-course{font-size:22px;}
+  .banner-stats{display:none;}
+}
 
 /* ══ SECTION LABEL ══ */
 .sec-lbl{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-left:2px;}
 
-/* ══ WEEK BANNER ══ */
-.wk-banner{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:var(--r);padding:13px 18px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;}
-.wb-ttl{font-weight:700;font-size:15px;color:var(--navy);}
-.wb-top{font-size:13px;color:var(--muted);}
-.wb-pills{display:flex;gap:7px;flex-wrap:wrap;}
-.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;}
-.pill-lec{background:#dbeafe;color:#1d4ed8;}.pill-lab{background:#d1fae5;color:#065f46;}
-
-/* ═══ WEEK BAR ═══ */
-.wk-bar{background:var(--navy2);border-top:1px solid rgba(255,255,255,.08);padding:9px 24px;}
-.wk-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
-.wk-bar-lbl{color:rgba(255,255,255,.7);font-size:12px;white-space:nowrap;}
-.wk-btns{display:flex;gap:4px;flex-wrap:wrap;}
-.wbtn{width:29px;height:29px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .15s;}
-.wbtn:hover{background:rgba(255,255,255,.16);}
-.wbtn.active{background:var(--teal);border-color:var(--teal2);color:#fff;}
+/* ══ CURRENT WEEK PANEL ══ */
+.cw-panel{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:var(--r);padding:14px 20px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;}
+.cw-left{display:flex;flex-direction:column;gap:3px;}
+.cw-wk{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);}
+.cw-topic{font-weight:700;font-size:16px;color:var(--navy);line-height:1.3;}
+.cw-type{font-size:12px;color:var(--muted);margin-top:1px;}
+.cw-right{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.cw-pill{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;}
+.cp-lec{background:#dbeafe;color:#1d4ed8;}
+.cp-lab{background:#d1fae5;color:#065f46;}
+.cp-st-g{background:var(--gbg);color:var(--green);}
+.cp-st-a{background:var(--abg);color:var(--amber);}
+.cp-st-r{background:var(--rbg);color:var(--red);}
 
 /* ══ DASHBOARD CARDS ══ */
 .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
@@ -79,6 +103,39 @@ nav{background:var(--navy2);border-bottom:2px solid var(--teal);}
 .sl{color:var(--muted);}.sv{font-weight:700;font-size:14px;}
 .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
 .g{background:var(--gbg);color:var(--green);}.a{background:var(--abg);color:var(--amber);}.r{background:var(--rbg);color:var(--red);}
+/* segmented bar */
+.seg-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:1px;margin:4px 0 8px;}
+.seg{height:100%;transition:width .4s;}
+.seg-g{background:var(--green);}.seg-a{background:var(--amber);}.seg-r{background:#d1dbe8;}
+/* ring chart */
+.ring-wrap{display:flex;align-items:center;gap:14px;}
+.ring-svg{flex-shrink:0;}
+.ring-legend{display:flex;flex-direction:column;gap:5px;flex:1;}
+.ring-item{display:flex;align-items:center;gap:6px;font-size:12px;}
+.ring-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.ring-lbl{flex:1;color:var(--muted);}
+.ring-val{font-weight:700;color:var(--text);}
+/* bullet gauge */
+.gauge-list{display:flex;flex-direction:column;gap:9px;}
+.gauge-row{display:flex;flex-direction:column;gap:3px;}
+.gauge-hd{display:flex;justify-content:space-between;font-size:12px;}
+.gauge-lbl{color:var(--muted);}
+.gauge-pct{font-weight:700;font-size:12px;}
+.gauge-track{height:8px;background:#e8eef6;border-radius:4px;overflow:hidden;position:relative;}
+.gauge-fill{height:100%;border-radius:4px;transition:width .4s;}
+/* tile grid for workshop */
+.tile-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.tile{background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.tile-num{font-size:18px;font-weight:700;color:var(--navy);line-height:1;}
+.tile-lbl{font-size:10px;color:var(--muted);font-weight:600;}
+.tile-bar{width:100%;height:4px;border-radius:2px;background:#e8eef6;overflow:hidden;margin-top:2px;}
+.tile-fill{height:100%;border-radius:2px;background:var(--teal);}
+/* stat big number */
+.stat-big{display:flex;gap:16px;align-items:center;padding:8px 0;}
+.stat-big-num{font-size:38px;font-weight:700;color:var(--navy);line-height:1;}
+.stat-big-side{display:flex;flex-direction:column;gap:3px;}
+.stat-big-lbl{font-size:11px;color:var(--muted);}
+.stat-big-sub{font-size:12px;font-weight:600;}
 .pw{display:flex;flex-direction:column;gap:7px;}
 .ph{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;}
 .pl{color:var(--muted);}.pp{font-weight:700;}
@@ -90,10 +147,6 @@ nav{background:var(--navy2);border-bottom:2px solid var(--teal);}
 .td2{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .td-g2{background:var(--green);}.td-a2{background:var(--amber);}.td-r2{background:var(--red);}
 .tn{flex:1;}.tb{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
-.eq-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.eq-item{background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:8px 10px;}
-.eq-nm{color:var(--muted);font-size:11px;margin-bottom:2px;}
-.eq-ct{font-weight:700;font-size:15px;color:var(--navy);}.eq-un{font-size:10px;color:var(--muted);}
 
 /* ══ ROADMAP ══ */
 .rm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:24px;}
@@ -262,51 +315,34 @@ tbody tr:hover td{background:#f8fafc;}
 .row-del{background:none;border:1px solid #fecaca;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;cursor:pointer;white-space:nowrap;transition:background .15s;}
 .row-del:hover{background:#fee2e2;}
 
-/* ══ FOOTER ══ */
-footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);background:var(--surface);}
 </style>
 </head>
 <body>
 
-<!-- ══ TOP HEADER ══ -->
-<div class="top-hdr">
-  <div class="hdr-inner">
-    <div class="hdr-left">
-      <div class="inst-logo">
-        <img src="https://www.psa.edu.my/images/logo-psa.png" alt="PSA Logo"
-             onerror="this.style.display='none';document.getElementById('logoFb').style.display='flex'"/>
-        <div class="inst-logo-fb" id="logoFb">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-        </div>
-      </div>
-      <div class="hdr-text">
-        <div class="inst">Politeknik Sultan Salahuddin Abdul Aziz Shah</div>
-        <div class="dept">Department of Electrical Engineering</div>
-        <div class="ttl">Electrical Circuit 1</div>
-        <div class="sub">14-Week Teaching &amp; Learning Tracker &nbsp;|&nbsp; Diploma in Electronic Engineering (Telecommunication)</div>
-      </div>
+<!-- ══ LEFT SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <!-- PSA Logo — inline SVG replica of Politeknik Malaysia logo -->
+      <svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg" style="width:150px;height:auto;display:block">
+        <!-- Swoosh arcs -->
+        <path d="M 50 62 Q 110 -18 195 28" stroke="#1a1a1a" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 42 68 Q 108 -10 200 35" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- POLITEKNIK text -->
+        <text x="5" y="80" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="28" fill="#cc0000" letter-spacing="-0.5">POLITEKNIK</text>
+        <!-- Red lines flanking MALAYSIA -->
+        <rect x="5" y="84" width="48" height="3.5" fill="#cc0000" rx="1"/>
+        <rect x="167" y="84" width="48" height="3.5" fill="#cc0000" rx="1"/>
+        <!-- MALAYSIA text -->
+        <text x="112" y="91" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="13" fill="#cc0000" text-anchor="middle" letter-spacing="1.5">MALAYSIA</text>
+        <!-- SULTAN SALAHUDDIN line -->
+        <text x="112" y="106" font-family="Arial Black,Impact,sans-serif" font-weight="900" font-size="9.5" fill="#1a1a1a" text-anchor="middle" letter-spacing="0.8">SULTAN SALAHUDDIN ABDUL AZIZ SHAH</text>
+      </svg>
     </div>
-    <div class="hdr-meta">
-      <span class="bmeta">📅 Semester 1</span>
-      <span class="bmeta">🕐 2h Lecture + 2h Lab / Week</span>
-      <span class="bmeta">AY 2024 / 2025</span>
-    </div>
+    <div class="sb-sub" style="margin-top:6px">Dept. of Electrical Engineering</div>
   </div>
-
-  <!-- Week Selector (shown only on Dashboard page) -->
-  <div class="wk-bar" id="weekBarWrap">
-    <div class="wk-bar-inner">
-      <span class="wk-bar-lbl">Select Week:</span>
-      <div class="wk-btns" id="weekBtns"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ NAV BAR ══ -->
-<nav>
-  <div class="nav-inner">
+  <nav class="sb-nav">
+    <div class="sb-section">Main Menu</div>
     <button class="nav-btn active" data-page="pgDashboard">
       <span class="nav-ic">📊</span><span class="nav-lbl">Dashboard</span>
     </button>
@@ -322,8 +358,56 @@ footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);bor
     <button class="nav-btn" data-page="pgTeaching">
       <span class="nav-ic">📅</span><span class="nav-lbl">Teaching Plan</span>
     </button>
+  </nav>
+  <div class="sb-footer">AY 2024 / 2025 &nbsp;·&nbsp; Sem 1<br>EC1 Teaching Tracker</div>
+</aside>
+
+<!-- ══ MAIN CONTENT ══ -->
+<div class="main-wrap">
+
+<!-- ══ TOP BANNER ══ -->
+<div class="top-banner">
+  <!-- Circuit board decorative SVG -->
+  <svg class="banner-deco" viewBox="0 0 340 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="30" y="30" width="280" height="120" rx="4" stroke="#fff" stroke-width="1.5"/>
+    <circle cx="60" cy="50" r="8" stroke="#fff" stroke-width="1.5"/><circle cx="60" cy="50" r="3" fill="#fff"/>
+    <circle cx="120" cy="90" r="8" stroke="#fff" stroke-width="1.5"/><circle cx="120" cy="90" r="3" fill="#fff"/>
+    <circle cx="200" cy="60" r="8" stroke="#fff" stroke-width="1.5"/><circle cx="200" cy="60" r="3" fill="#fff"/>
+    <circle cx="270" cy="120" r="8" stroke="#fff" stroke-width="1.5"/><circle cx="270" cy="120" r="3" fill="#fff"/>
+    <line x1="60" y1="50" x2="120" y2="50" stroke="#fff" stroke-width="1.2"/>
+    <line x1="120" y1="50" x2="120" y2="90" stroke="#fff" stroke-width="1.2"/>
+    <line x1="120" y1="90" x2="200" y2="90" stroke="#fff" stroke-width="1.2"/>
+    <line x1="200" y1="60" x2="200" y2="90" stroke="#fff" stroke-width="1.2"/>
+    <line x1="200" y1="90" x2="270" y2="90" stroke="#fff" stroke-width="1.2"/>
+    <line x1="270" y1="90" x2="270" y2="120" stroke="#fff" stroke-width="1.2"/>
+    <rect x="85" y="42" width="20" height="16" rx="2" stroke="#fff" stroke-width="1.2"/>
+    <rect x="155" y="82" width="20" height="16" rx="2" stroke="#fff" stroke-width="1.2"/>
+    <rect x="225" y="82" width="20" height="16" rx="2" stroke="#fff" stroke-width="1.2"/>
+    <line x1="30" y1="70" x2="52" y2="70" stroke="#fff" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="30" y1="110" x2="52" y2="110" stroke="#fff" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="288" y1="70" x2="310" y2="70" stroke="#fff" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="288" y1="110" x2="310" y2="110" stroke="#fff" stroke-width="1" stroke-dasharray="3 3"/>
+    <circle cx="160" cy="30" r="4" stroke="#fff" stroke-width="1.2"/><line x1="160" y1="34" x2="160" y2="42" stroke="#fff" stroke-width="1.2"/>
+    <circle cx="240" cy="150" r="4" stroke="#fff" stroke-width="1.2"/><line x1="240" y1="138" x2="240" y2="146" stroke="#fff" stroke-width="1.2"/>
+  </svg>
+  <div class="banner-inner">
+    <div>
+      <div class="banner-tag">Diploma in Electronic Engineering (Telecommunication)</div>
+      <div class="banner-course">Electrical <span>Circuit 1</span></div>
+      <div class="banner-dept">14-Week Teaching &amp; Learning Tracker &nbsp;·&nbsp; Class EL1-T01</div>
+      <div class="banner-pills">
+        <span class="banner-pill">📖 2h Lecture / Week</span>
+        <span class="banner-pill">🔬 2h Laboratory / Week</span>
+        <span class="banner-pill">📅 Semester 1 &nbsp;·&nbsp; AY 2024/25</span>
+      </div>
+    </div>
+    <div class="banner-stats" id="bannerStats">
+      <div class="b-stat"><div class="b-stat-num" id="bsStudents">32</div><div class="b-stat-lbl">Students</div></div>
+      <div class="b-stat"><div class="b-stat-num" id="bsWeeks">14</div><div class="b-stat-lbl">Weeks</div></div>
+      <div class="b-stat"><div class="b-stat-num" id="bsComplete" style="color:var(--teal2)">—</div><div class="b-stat-lbl">Completed</div></div>
+    </div>
   </div>
-</nav>
+</div>
 
 <!-- ══════════════════════════════════ -->
 <!--  PAGE 1 — DASHBOARD               -->
@@ -332,15 +416,17 @@ footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);bor
 
 <div class="page active" id="pgDashboard">
 
-  <!-- Week Banner -->
-  <div class="wk-banner">
-    <div>
-      <div class="wb-ttl" id="wbTitle">Week 1</div>
-      <div class="wb-top" id="wbTopic">Introduction to Electrical Circuits · Foundation</div>
+  <!-- Current Week Panel -->
+  <div class="cw-panel" id="cwPanel">
+    <div class="cw-left">
+      <div class="cw-wk" id="cwWeekLabel">Current Week</div>
+      <div class="cw-topic" id="cwTopic">—</div>
+      <div class="cw-type" id="cwType"></div>
     </div>
-    <div class="wb-pills">
-      <span class="pill pill-lec">📖 2-Hour Lecture</span>
-      <span class="pill pill-lab">🔬 2-Hour Laboratory</span>
+    <div class="cw-right">
+      <span class="cw-pill cp-lec">📖 2-Hour Lecture</span>
+      <span class="cw-pill cp-lab">🔬 2-Hour Laboratory</span>
+      <span class="cw-pill" id="cwStatus"></span>
     </div>
   </div>
 
@@ -537,11 +623,11 @@ footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);bor
     </div>
   </div>
 
-  <!-- Lab & Equipment Form -->
-  <div class="sec-lbl">Laboratory &amp; Equipment Status</div>
-  <div class="ws-grid">
+  <!-- Lab Status -->
+  <div class="sec-lbl">Laboratory Status</div>
+  <div class="ws-grid" style="margin-bottom:20px">
     <div class="ws-card">
-      <div class="ws-card-ttl">🏫 Laboratory Status</div>
+      <div class="ws-card-ttl">🏫 Lab Readiness</div>
       <div class="ws-group">
         <label class="ws-label">Lab Readiness</label>
         <select class="ws-input" id="w_labReady">
@@ -558,32 +644,112 @@ footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);bor
           <option value="failed">Failed</option>
         </select>
       </div>
-      <div class="ws-group">
+      <div class="ws-group" style="margin-bottom:0">
         <label class="ws-label">Equipment Faults Logged</label>
         <input class="ws-input" id="w_faults" type="number" min="0" max="99"/>
-      </div>
-    </div>
-    <div class="ws-card">
-      <div class="ws-card-ttl">🔌 Equipment Inventory</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div class="ws-group"><label class="ws-label">Multimeters – Available</label><input class="ws-input" id="w_mmAvail" type="number" min="0"/></div>
-        <div class="ws-group"><label class="ws-label">Multimeters – Total</label><input class="ws-input" id="w_mmTotal" type="number" min="1"/></div>
-        <div class="ws-group"><label class="ws-label">DC Power Supplies – Available</label><input class="ws-input" id="w_psAvail" type="number" min="0"/></div>
-        <div class="ws-group"><label class="ws-label">DC Power Supplies – Total</label><input class="ws-input" id="w_psTotal" type="number" min="1"/></div>
-        <div class="ws-group"><label class="ws-label">Breadboards – Available</label><input class="ws-input" id="w_bbAvail" type="number" min="0"/></div>
-        <div class="ws-group"><label class="ws-label">Breadboards – Total</label><input class="ws-input" id="w_bbTotal" type="number" min="1"/></div>
-        <div class="ws-group" style="grid-column:1/-1"><label class="ws-label">Circuit Components</label>
-          <select class="ws-input" id="w_components">
-            <option value="in-stock">In Stock</option>
-            <option value="low">Low Stock</option>
-            <option value="out">Out of Stock</option>
-          </select>
-        </div>
       </div>
       <div class="ws-foot">
         <span class="ws-saved" id="wsSaved">✓ Saved!</span>
         <button class="de-btn" id="wsReset">Reset</button>
         <button class="de-btn de-btn-t" id="wsSave">Save Status</button>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-card-ttl">📊 Equipment Summary</div>
+      <div id="eqSummaryBox" style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+        <div style="color:var(--muted);font-size:12px">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equipment Inventory -->
+  <div class="sec-lbl">Equipment Inventory</div>
+  <div class="info-note">🔧 Tambah atau padam peralatan. Klik <strong>Edit</strong> untuk kemaskini status, kuantiti dan penugasan labwork. Status: <span class="badge g">Boleh Guna</span> <span class="badge a">Perlu Baiki</span> <span class="badge r">Rosak/Ganti</span></div>
+
+  <div class="toolbar">
+    <input class="srch" id="eqSearch" type="text" placeholder="🔍  Cari nama peralatan…"/>
+    <span class="tbl-count" id="eqCount"></span>
+    <button class="de-btn de-btn-t" id="btnAddEq">+ Tambah Peralatan</button>
+  </div>
+
+  <div class="tbl-wrap" style="margin-bottom:24px">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Nama Peralatan</th><th>Kuantiti</th>
+          <th>Status</th>
+          <th>Ditugaskan ke Labwork</th>
+          <th>Catatan</th><th>Tindakan</th>
+        </tr>
+      </thead>
+      <tbody id="eqBody"></tbody>
+    </table>
+  </div>
+
+  <!-- MODAL: Add Equipment -->
+  <div class="modal-overlay" id="modalAddEq">
+    <div class="modal-box" style="max-width:520px">
+      <div class="modal-hdr">
+        <span class="modal-hdr-ttl" id="addEqModalTitle">➕ Tambah Peralatan Baru</span>
+        <button class="modal-x" data-close-modal="modalAddEq">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="mf-group">
+          <label class="mf-label">Nama Peralatan <span style="color:var(--red)">*</span></label>
+          <input class="mf-input" id="eq_name" type="text" placeholder="cth. Multimeter Digital, Bekalan Kuasa DC…"/>
+        </div>
+        <div class="mf-row">
+          <div class="mf-group">
+            <label class="mf-label">Kuantiti</label>
+            <input class="mf-input" id="eq_qty" type="number" min="1" value="1"/>
+          </div>
+          <div class="mf-group">
+            <label class="mf-label">Status</label>
+            <select class="mf-select" id="eq_status">
+              <option value="ok">✅ Boleh Guna</option>
+              <option value="repair">⚠️ Perlu Baiki</option>
+              <option value="broken">❌ Rosak / Perlu Ganti</option>
+            </select>
+          </div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Tugaskan ke Labwork (boleh pilih lebih satu)</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:8px 0">
+            <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" class="eq-lw-cb" value="1"> LW1</label>
+            <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" class="eq-lw-cb" value="2"> LW2</label>
+            <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" class="eq-lw-cb" value="3"> LW3</label>
+            <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" class="eq-lw-cb" value="4"> LW4</label>
+            <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" class="eq-lw-cb" value="5"> LW5</label>
+          </div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Catatan (pilihan)</label>
+          <input class="mf-input" id="eq_notes" type="text" placeholder="cth. Unit #3 perlu kalibrasi"/>
+        </div>
+        <div id="addEqErr" style="color:var(--red);font-size:12px;display:none"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal="modalAddEq">Batal</button>
+        <button class="de-btn de-btn-t" id="confirmAddEq">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Delete Equipment -->
+  <div class="modal-overlay" id="modalDelEq">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <span class="modal-hdr-ttl">🗑️ Padam Peralatan</span>
+        <button class="modal-x" data-close-modal="modalDelEq">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px;color:var(--muted)">Anda akan memadam peralatan:</p>
+        <div class="del-name" id="delEqName">—</div>
+        <div class="del-warn"><strong>⚠️ Tindakan ini tidak boleh dibatalkan.</strong>Rekod peralatan ini akan dipadam sepenuhnya.</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal="modalDelEq">Batal</button>
+        <button class="btn-del" id="confirmDelEq">Ya, Padam</button>
       </div>
     </div>
   </div>
@@ -788,7 +954,9 @@ footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);bor
 
 </div><!-- /page-wrap -->
 
-<footer>Made with <strong>IBM Bob</strong> &nbsp;·&nbsp; Electrical Circuit 1 &nbsp;·&nbsp; TVET Diploma in Electronic Engineering (Telecommunication)</footer>
+<footer style="text-align:center;padding:14px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);background:var(--surface)">Made with <strong>IBM Bob</strong> &nbsp;·&nbsp; Electrical Circuit 1 &nbsp;·&nbsp; PSA · TVET Diploma in Electronic Engineering (Telecommunication)</footer>
+
+</div><!-- /main-wrap -->
 
 <script>
 // ═══════════════════════════════════════════════════
@@ -913,8 +1081,22 @@ LAB = LAB.map((lb,i)=>({
   lw4: lb.lw4!==undefined ? lb.lw4 : null,
   lw5: lb.lw5!==undefined ? lb.lw5 : null,
 }));
-const WS_DEF = {labReady:"ready",safety:"passed",faults:1,mmAvail:30,mmTotal:32,psAvail:16,psTotal:16,bbAvail:28,bbTotal:32,components:"in-stock"};
+const WS_DEF = {labReady:"ready",safety:"passed",faults:1};
 let WS = ls('ec1_ws', WS_DEF);
+
+// ── Equipment inventory ──
+const EQ_DEFAULT = [
+  {id:1, name:"Multimeter Digital",      qty:32, status:"ok",     labworks:[1,2,3,4,5], notes:""},
+  {id:2, name:"Bekalan Kuasa DC",         qty:16, status:"ok",     labworks:[1,2,3,4,5], notes:""},
+  {id:3, name:"Breadboard",               qty:32, status:"ok",     labworks:[1,2,3,4,5], notes:""},
+  {id:4, name:"Perintang (Resistor Set)", qty:20, status:"ok",     labworks:[1,2,3],      notes:""},
+  {id:5, name:"Kapasitor (Capacitor Set)",qty:15, status:"ok",     labworks:[4,5],        notes:""},
+  {id:6, name:"Wayar Penyambung",         qty:50, status:"repair", labworks:[1,2,3,4,5], notes:"Beberapa wayar longgar"},
+  {id:7, name:"Osiloskop",               qty:8,  status:"ok",     labworks:[3,4,5],      notes:""},
+  {id:8, name:"Papan Litar (PCB)",        qty:10, status:"broken", labworks:[5],          notes:"Perlu diganti sebelum LW5"},
+];
+let EQ_LIST = ls('ec1_eq', EQ_DEFAULT);
+let _eqNextId = Math.max(...EQ_LIST.map(e=>e.id), 0) + 1;
 
 const clKey = w=>`ec1_cl_w${w}`;
 const ldCl  = w=>{ try{ return JSON.parse(localStorage.getItem(clKey(w)))||{}; }catch{ return{}; } };
@@ -953,75 +1135,124 @@ function sfBadge(v) { return v==='passed'?['g','Passed']:v==='pending'?['a','Pen
 function ccBadge(v) { return v==='in-stock'?['g','In Stock']:v==='low'?['a','Low Stock']:['r','Out of Stock']; }
 function epct(a,t)  { return t>0?Math.round(a/t*100):0; }
 
+// SVG ring/donut helper — r=38, cx=cy=44, strokeWidth=10
+function ringChart(pct,color){
+  const r=36,cx=44,cy=44,sw=10;
+  const circ=2*Math.PI*r;
+  const dash=circ*(pct/100), gap=circ-dash;
+  return `<svg class="ring-svg" width="88" height="88" viewBox="0 0 88 88">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#e8eef6" stroke-width="${sw}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${sw}"
+      stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"
+      transform="rotate(-90 ${cx} ${cy})"/>
+    <text x="${cx}" y="${cy+1}" text-anchor="middle" dominant-baseline="middle"
+      font-size="15" font-weight="700" fill="#1a2a3a">${pct}%</text>
+  </svg>`;
+}
+
 function renderCards(){
   const {n,attAvg,pracPct,attn,qDone,wsDone,testSt,examSt,ovr,mrkPct}=stats();
-  // Student card
+
+  // ── CARD 1: Students — Ring chart (practical status) + big attendance number ──
+  const nComp=STUDENTS.filter(s=>s.practical==='Completed').length;
+  const nPend=STUDENTS.filter(s=>s.practical==='Pending').length;
+  const nAttn=STUDENTS.filter(s=>s.practical==='Attention').length;
+  const pComp=Math.round(nComp/n*100), pPend=Math.round(nPend/n*100), pAttn=Math.round(nAttn/n*100);
+  const attColor=attAvg>=80?'var(--green)':attAvg>=60?'var(--amber)':'var(--red)';
   document.getElementById('cardStudents').innerHTML=`
     <div class="card-hd">
       <div class="c-ico ico-nv"><svg viewBox="0 0 24 24" fill="none" stroke="#163a6e" stroke-width="2" stroke-linecap="round" width="19" height="19">
         <circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
         <circle cx="17" cy="9" r="2"/><path d="M21 20c0-2.2-1.8-4-4-4"/></svg></div>
-      <div><div class="c-name">Students</div><div class="c-desc">Class EL1-T01 · Sem 1, 2024/25</div></div>
+      <div><div class="c-name">Students</div><div class="c-desc">Class EL1-T01 · ${n} enrolled</div></div>
     </div>
-    <div>
-      <div class="stat-row"><span class="sl">Total Enrolled</span><span class="sv">${n}</span></div>
-      <div class="stat-row"><span class="sl">Attendance Rate</span><span class="sv">${attAvg}%</span></div>
-      <div class="stat-row"><span class="sl">Practical Completion</span><span class="sv">${pracPct}%</span></div>
-      <div class="stat-row"><span class="sl">Requiring Attention</span><span class="badge ${attn>0?'a':'g'}">${attn} Student${attn!==1?'s':''}</span></div>
+    <div class="ring-wrap">
+      ${ringChart(pracPct,'var(--teal)')}
+      <div class="ring-legend">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600">PRACTICAL STATUS</div>
+        <div class="ring-item"><div class="ring-dot" style="background:var(--green)"></div><span class="ring-lbl">Completed</span><span class="ring-val">${nComp}</span></div>
+        <div class="ring-item"><div class="ring-dot" style="background:#d1dbe8"></div><span class="ring-lbl">Pending</span><span class="ring-val">${nPend}</span></div>
+        <div class="ring-item"><div class="ring-dot" style="background:var(--amber)"></div><span class="ring-lbl">Attention</span><span class="ring-val">${nAttn}</span></div>
+      </div>
     </div>
-    <div class="pw">
-      <div><div class="ph"><span class="pl">Attendance</span><span class="pp">${attAvg}%</span></div><div class="pb"><div class="pf ${fc(attAvg)}" style="width:${attAvg}%"></div></div></div>
-      <div><div class="ph"><span class="pl">Practical Completion</span><span class="pp">${pracPct}%</span></div><div class="pb"><div class="pf ${fc(pracPct)}" style="width:${pracPct}%"></div></div></div>
+    <div style="border-top:1px solid #f1f5f9;padding-top:10px">
+      <div style="font-size:11px;color:var(--muted);font-weight:600;margin-bottom:6px">ATTENDANCE</div>
+      <div class="seg-bar">
+        <div class="seg seg-g" style="width:${attAvg}%"></div>
+        <div class="seg seg-r" style="width:${100-attAvg}%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">
+        <span>Present avg <strong style="color:${attColor}">${attAvg}%</strong></span>
+        <span class="badge ${attn>0?'a':'g'}">${attn} need${attn===1?'s':''} attention</span>
+      </div>
     </div>`;
-  // Task card
+
+  // ── CARD 2: Assessment — Bullet gauges ──
   const [tC,tL]=tsBadge(testSt),[eC,eL]=tsBadge(examSt);
-  const qC=qDone>=n?'g':qDone>0?'a':'r', wsC=wsDone>=n?'g':wsDone>0?'a':'r';
+  const gauges=[
+    {lbl:'Quizzes (5)',    pct:Math.round(qDone/n*100),   color:'var(--teal)',  txt:`${qDone}/${n}`},
+    {lbl:'Worksheets (5)',pct:Math.round(wsDone/n*100),   color:'#6366f1',     txt:`${wsDone}/${n}`},
+    {lbl:'Integrated Test',pct:testSt==='completed'?100:testSt==='in-progress'?50:0, color:'var(--amber)', txt:tL},
+    {lbl:'Final Exam',    pct:examSt==='completed'?100:examSt==='in-progress'?50:0, color:'var(--green)',  txt:eL},
+  ];
   document.getElementById('cardTasks').innerHTML=`
     <div class="card-hd">
       <div class="c-ico ico-tl"><svg viewBox="0 0 24 24" fill="none" stroke="#0d6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19">
         <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-      <div><div class="c-name">Assessment Tasks</div><div class="c-desc">Quizzes · Worksheets · Test · Exam</div></div>
+      <div><div class="c-name">Assessment Tasks</div><div class="c-desc">Marks completion overview</div></div>
     </div>
-    <div class="t-list">
-      <div class="t-row"><span class="td2 td-${qC}2"></span><span class="tn">Topic Quizzes (5)</span><span class="tb badge ${qC}">${qDone}/${n} complete</span></div>
-      <div class="t-row"><span class="td2 td-${wsC}2"></span><span class="tn">Practical Worksheets (5)</span><span class="tb badge ${wsC}">${wsDone}/${n} complete</span></div>
-      <div class="t-row"><span class="td2 td-${tC}2"></span><span class="tn">Integrated Test</span><span class="tb badge ${tC}">${tL}</span></div>
-      <div class="t-row"><span class="td2 td-${eC}2"></span><span class="tn">Final Examination</span><span class="tb badge ${eC}">${eL}</span></div>
+    <div class="gauge-list">
+      ${gauges.map(g=>`
+        <div class="gauge-row">
+          <div class="gauge-hd"><span class="gauge-lbl">${g.lbl}</span><span class="gauge-pct" style="color:${g.color}">${g.txt}</span></div>
+          <div class="gauge-track"><div class="gauge-fill" style="width:${g.pct}%;background:${g.color}"></div></div>
+        </div>`).join('')}
     </div>
-    <div class="pw">
-      <div><div class="ph"><span class="pl">Overall Progress</span><span class="pp">${ovr}%</span></div><div class="pb"><div class="pf ${fc(ovr)}" style="width:${ovr}%"></div></div></div>
-      <div><div class="ph"><span class="pl">Marks Recorded</span><span class="pp">${mrkPct}%</span></div><div class="pb"><div class="pf fn" style="width:${mrkPct}%"></div></div></div>
+    <div style="border-top:1px solid #f1f5f9;padding-top:10px;display:flex;align-items:center;gap:10px">
+      ${ringChart(ovr,'#6366f1')}
+      <div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600">OVERALL PROGRESS</div>
+        <div style="font-size:13px;margin-top:4px">Marks recorded: <strong>${mrkPct}%</strong></div>
+      </div>
     </div>`;
-  // Workshop card
+
+  // ── CARD 3: Workshop — Status badges + LW tile grid ──
   const d=WS;
-  const [lC,lL]=labBadge(d.labReady),[sC,sL]=sfBadge(d.safety),[cC,cL]=ccBadge(d.components);
-  const fb=d.faults===0?`<span class="badge g">No Faults</span>`:`<span class="badge ${d.faults>3?'r':'a'}">${d.faults} Fault${d.faults!==1?'s':''} Logged</span>`;
-  // Labwork stats
+  const [lC,lL]=labBadge(d.labReady),[sC,sL]=sfBadge(d.safety);
   const lwFields=['lw1','lw2','lw3','lw4','lw5'];
   const lwDone=lwFields.map(f=>LAB.filter(lb=>lb[f]!==null&&lb[f]!==undefined).length);
-  const lwAll=lwFields.every(f=>LAB.every(lb=>lb[f]!==null&&lb[f]!==undefined));
-  const lwAny=lwFields.some(f=>LAB.some(lb=>lb[f]!==null&&lb[f]!==undefined));
-  const lwC=lwAll?'g':lwAny?'a':'r';
   const lwPct=Math.round(lwDone.reduce((a,b)=>a+b,0)/(LAB.length*5)*100);
   const tg=Math.max(...LAB.map(lb=>lb.group||0),0);
+  // Avg score per LW
+  const lwAvgScore=lwFields.map(f=>{
+    const vals=LAB.map(lb=>lb[f]).filter(v=>v!==null&&v!==undefined);
+    return vals.length?Math.round(vals.reduce((a,b)=>a+ +b,0)/vals.length*10)/10:null;
+  });
   document.getElementById('cardWorkshop').innerHTML=`
     <div class="card-hd">
       <div class="c-ico ico-am"><svg viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19">
         <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3-3a1 1 0 000-1.4l-1.6-1.6a1 1 0 00-1.4 0z"/>
         <path d="M13 9l-9.4 9.4a2 2 0 002.8 2.8L16 12"/></svg></div>
-      <div><div class="c-name">Workshop Status</div><div class="c-desc">Laboratory Readiness · ${tg} Practical Groups</div></div>
+      <div><div class="c-name">Workshop</div><div class="c-desc">${tg} groups · Lab ${lL}</div></div>
     </div>
-    <div>
-      <div class="stat-row"><span class="sl">Lab Readiness</span><span class="badge ${lC}">${lL}</span></div>
-      <div class="stat-row"><span class="sl">Safety Inspection</span><span class="badge ${sC}">${sL}</span></div>
-      <div class="stat-row"><span class="sl">Equipment Status</span>${fb}</div>
-      <div class="stat-row"><span class="sl">Labwork Marks Recorded</span><span class="badge ${lwC}">${lwPct}%</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span class="badge ${lC}">${lL}</span>
+      <span class="badge ${sC}">Safety: ${sL}</span>
+      <span class="badge ${d.faults===0?'g':d.faults>3?'r':'a'}">${d.faults===0?'No Faults':d.faults+' Fault'+(d.faults!==1?'s':'')}</span>
     </div>
-    <div class="t-list" style="margin-top:4px">
-      ${lwFields.map((f,fi)=>{const cnt=lwDone[fi];const c=cnt>=n?'g':cnt>0?'a':'r';return `<div class="t-row"><span class="td2 td-${c}2"></span><span class="tn">Labwork ${fi+1}</span><span class="tb badge ${c}">${cnt}/${n} entered</span></div>`;}).join('')}
-    </div>
-    <div class="pw" style="margin-top:8px">
-      <div><div class="ph"><span class="pl">Labwork Completion</span><span class="pp">${lwPct}%</span></div><div class="pb"><div class="pf ${fc(lwPct)}" style="width:${lwPct}%"></div></div></div>
+    <div style="font-size:11px;color:var(--muted);font-weight:600;margin-bottom:7px">LABWORK MARKS (avg /20)</div>
+    <div class="tile-grid">
+      ${lwFields.map((f,fi)=>{
+        const cnt=lwDone[fi]; const avg=lwAvgScore[fi];
+        const pct=avg!==null?Math.round(avg/20*100):0;
+        const col=pct>=75?'var(--green)':pct>=50?'var(--teal)':'var(--amber)';
+        return `<div class="tile">
+          <div class="tile-lbl">LW${fi+1}</div>
+          <div class="tile-num" style="color:${avg!==null?col:'#d1dbe8'}">${avg!==null?avg:'—'}</div>
+          <div class="tile-bar"><div class="tile-fill" style="width:${pct}%;background:${col}"></div></div>
+          <div style="font-size:9px;color:var(--muted)">${cnt}/${n}</div>
+        </div>`;
+      }).join('')}
     </div>`;
 }
 
@@ -1050,10 +1281,9 @@ function goPage(id){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelector(`[data-page="${id}"]`).classList.add('active');
-  document.getElementById('weekBarWrap').style.display = id==='pgDashboard'?'block':'none';
   if(id==='pgStudents')   renderStuTable();
   if(id==='pgAssessment') renderTaskTable();
-  if(id==='pgWorkshop')   { loadWsForm(); renderAllocCards(); renderWsTable(); }
+  if(id==='pgWorkshop')   { loadWsForm(); renderEqTable(); renderAllocCards(); renderWsTable(); }
   if(id==='pgTeaching')   initTeachingPage();
 }
 document.querySelectorAll('.nav-btn').forEach(btn=>{
@@ -1061,23 +1291,27 @@ document.querySelectorAll('.nav-btn').forEach(btn=>{
 });
 
 // ═══════════════════════════════════════════════════
-//  WEEK BUTTONS (Dashboard)
+//  CURRENT WEEK PANEL — auto-detect from lesson plan
 // ═══════════════════════════════════════════════════
-let activeWeek=1;
-function buildWeekBtns(){
-  const w=document.getElementById('weekBtns'); w.innerHTML='';
+function renderCurrentWeekPanel(){
+  // Find the first week that is 'in-progress', or last 'completed' week +1, else week 1
+  let curW=1;
   for(let i=1;i<=14;i++){
-    const b=document.createElement('button');
-    b.className='wbtn'+(i===activeWeek?' active':'');
-    b.textContent=i; b.title=`Week ${i}: ${WEEK_DATA[i-1].topic}`;
-    b.addEventListener('click',()=>{ activeWeek=i; buildWeekBtns(); updateBanner(); buildRoadmap(); });
-    w.appendChild(b);
+    const st=ldLp(i).status;
+    if(st==='in-progress'){ curW=i; break; }
+    if(st==='completed') curW=Math.min(14,i+1);
   }
-}
-function updateBanner(){
-  const d=WEEK_DATA[activeWeek-1];
-  document.getElementById('wbTitle').textContent=`Week ${activeWeek}`;
-  document.getElementById('wbTopic').textContent=`${d.topic}  ·  ${d.type}`;
+  const lp=ldLp(curW);
+  const topic=lp.topic||WEEK_DATA[curW-1].topic;
+  const type=WEEK_DATA[curW-1].type;
+  const st=lp.status||'pending';
+  document.getElementById('cwWeekLabel').textContent=`Week ${curW} — Current`;
+  document.getElementById('cwTopic').textContent=topic;
+  document.getElementById('cwType').textContent=type;
+  const stEl=document.getElementById('cwStatus');
+  if(st==='completed'){ stEl.className='cw-pill cp-st-g'; stEl.textContent='✓ Completed'; }
+  else if(st==='in-progress'){ stEl.className='cw-pill cp-st-a'; stEl.textContent='⏳ In Progress'; }
+  else { stEl.className='cw-pill cp-st-r'; stEl.textContent='— Pending'; }
 }
 
 // ═══════════════════════════════════════════════════
@@ -1087,10 +1321,9 @@ function sBadge(s){ return s==='completed'?'<span class="badge g">✓ Completed<
 function buildRoadmap(){
   const grid=document.getElementById('roadmapGrid'); grid.innerHTML='';
   ROADMAP.forEach(r=>{
-    const act   = r.wNums.includes(activeWeek);
-    const status= getRoadmapStatus(r.wNums);
+    const status=getRoadmapStatus(r.wNums);
     const el=document.createElement('div');
-    el.className='rm-card'+(act?' act':'');
+    el.className='rm-card'+(status==='in-progress'?' act':'');
     el.style.cursor='pointer';
     el.title=`Click to open Week ${r.wNums[0]} lesson plan`;
     el.innerHTML=`<div class="rm-wk">${r.label}</div><div class="rm-tp">${r.topic}</div><div class="rm-ty">${r.type}</div><div class="rm-st">${sBadge(status)}</div>`;
@@ -1333,35 +1566,149 @@ document.getElementById('taskSearch').addEventListener('input',e=>{ taskQ=e.targ
 //  PAGE 4 — WORKSHOP FORM
 // ═══════════════════════════════════════════════════
 function loadWsForm(){
-  document.getElementById('w_labReady').value  =WS.labReady;
-  document.getElementById('w_safety').value    =WS.safety;
-  document.getElementById('w_faults').value    =WS.faults;
-  document.getElementById('w_mmAvail').value   =WS.mmAvail;
-  document.getElementById('w_mmTotal').value   =WS.mmTotal;
-  document.getElementById('w_psAvail').value   =WS.psAvail;
-  document.getElementById('w_psTotal').value   =WS.psTotal;
-  document.getElementById('w_bbAvail').value   =WS.bbAvail;
-  document.getElementById('w_bbTotal').value   =WS.bbTotal;
-  document.getElementById('w_components').value=WS.components;
+  document.getElementById('w_labReady').value = WS.labReady||'ready';
+  document.getElementById('w_safety').value   = WS.safety||'passed';
+  document.getElementById('w_faults').value   = WS.faults||0;
 }
 document.getElementById('wsSave').addEventListener('click',()=>{
   WS={
-    labReady:  document.getElementById('w_labReady').value,
-    safety:    document.getElementById('w_safety').value,
-    faults:   +document.getElementById('w_faults').value,
-    mmAvail:  +document.getElementById('w_mmAvail').value,
-    mmTotal:  +document.getElementById('w_mmTotal').value,
-    psAvail:  +document.getElementById('w_psAvail').value,
-    psTotal:  +document.getElementById('w_psTotal').value,
-    bbAvail:  +document.getElementById('w_bbAvail').value,
-    bbTotal:  +document.getElementById('w_bbTotal').value,
-    components:document.getElementById('w_components').value,
+    labReady: document.getElementById('w_labReady').value,
+    safety:   document.getElementById('w_safety').value,
+    faults:  +document.getElementById('w_faults').value,
   };
   ss('ec1_ws',WS); renderCards();
   const m=document.getElementById('wsSaved'); m.style.display='inline';
   setTimeout(()=>m.style.display='none',2000);
 });
 document.getElementById('wsReset').addEventListener('click',()=>{ WS={...WS_DEF}; ss('ec1_ws',WS); loadWsForm(); renderCards(); });
+
+// ═══════════════════════════════════════════════════
+//  PAGE 4 — EQUIPMENT INVENTORY
+// ═══════════════════════════════════════════════════
+const EQ_STATUS_MAP = {
+  ok:     {cls:'g', label:'✅ Boleh Guna'},
+  repair: {cls:'a', label:'⚠️ Perlu Baiki'},
+  broken: {cls:'r', label:'❌ Rosak/Ganti'},
+};
+
+function lwBadges(lws){
+  if(!lws||!lws.length) return '<span style="color:var(--muted);font-size:11px">—</span>';
+  return lws.map(n=>`<span class="lw-badge">LW${n}</span>`).join(' ');
+}
+
+function renderEqSummary(){
+  const box=document.getElementById('eqSummaryBox'); if(!box) return;
+  const total=EQ_LIST.length;
+  const ok=EQ_LIST.filter(e=>e.status==='ok').length;
+  const repair=EQ_LIST.filter(e=>e.status==='repair').length;
+  const broken=EQ_LIST.filter(e=>e.status==='broken').length;
+  box.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--navy)">${total}</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:600">JENIS PERALATAN</div>
+      </div>
+      <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--green)">${ok}</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:600">BOLEH GUNA</div>
+      </div>
+      <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--amber)">${repair}</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:600">PERLU BAIKI</div>
+      </div>
+      <div style="background:#fee2e2;border:1px solid #fecaca;border-radius:8px;padding:10px;text-align:center">
+        <div style="font-size:22px;font-weight:700;color:var(--red)">${broken}</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:600">ROSAK/GANTI</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted)">Klik <strong>+ Tambah Peralatan</strong> untuk menambah rekod baru ke inventori.</div>`;
+}
+
+let _eqQ='';
+function renderEqTable(){
+  const q=_eqQ.toLowerCase();
+  const filtered=EQ_LIST.filter(e=>e.name.toLowerCase().includes(q));
+  const cnt=document.getElementById('eqCount');
+  if(cnt) cnt.textContent=`Menunjukkan ${filtered.length} daripada ${EQ_LIST.length} peralatan`;
+  const body=document.getElementById('eqBody'); if(!body) return;
+  body.innerHTML='';
+  filtered.forEach((eq,fi)=>{
+    const st=EQ_STATUS_MAP[eq.status]||EQ_STATUS_MAP.ok;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td style="color:var(--muted);font-size:12px">${fi+1}</td>
+      <td style="font-weight:600">${eq.name}</td>
+      <td style="text-align:center"><strong>${eq.qty}</strong></td>
+      <td><span class="badge ${st.cls}">${st.label}</span></td>
+      <td style="max-width:180px">${lwBadges(eq.labworks)}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:160px">${eq.notes||'—'}</td>
+      <td style="display:flex;gap:5px;align-items:center">
+        <button class="row-save eq-edit-btn" data-id="${eq.id}">Edit</button>
+        <button class="row-del eq-del-btn" data-id="${eq.id}">🗑</button>
+      </td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('.eq-edit-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>openEqModal(+btn.dataset.id));
+  });
+  body.querySelectorAll('.eq-del-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>openDelEqModal(+btn.dataset.id));
+  });
+  renderEqSummary();
+}
+document.getElementById('eqSearch').addEventListener('input',e=>{ _eqQ=e.target.value; renderEqTable(); });
+
+// ── Add/Edit Equipment modal ──
+let _eqEditId=null;
+function openEqModal(editId=null){
+  _eqEditId=editId;
+  const title=document.getElementById('addEqModalTitle');
+  const eq=editId!==null ? EQ_LIST.find(e=>e.id===editId) : null;
+  title.textContent = eq ? '✏️ Edit Peralatan' : '➕ Tambah Peralatan Baru';
+  document.getElementById('eq_name').value  = eq ? eq.name  : '';
+  document.getElementById('eq_qty').value   = eq ? eq.qty   : 1;
+  document.getElementById('eq_status').value= eq ? eq.status: 'ok';
+  document.getElementById('eq_notes').value = eq ? eq.notes : '';
+  document.querySelectorAll('.eq-lw-cb').forEach(cb=>{
+    cb.checked = eq ? (eq.labworks||[]).includes(+cb.value) : false;
+  });
+  document.getElementById('addEqErr').style.display='none';
+  openModal('modalAddEq');
+}
+document.getElementById('btnAddEq').addEventListener('click',()=>openEqModal(null));
+document.getElementById('confirmAddEq').addEventListener('click',()=>{
+  const name=document.getElementById('eq_name').value.trim();
+  const err=document.getElementById('addEqErr');
+  if(!name){ err.textContent='Nama peralatan diperlukan.'; err.style.display='block'; return; }
+  const qty=Math.max(1,+document.getElementById('eq_qty').value||1);
+  const status=document.getElementById('eq_status').value;
+  const notes=document.getElementById('eq_notes').value.trim();
+  const labworks=[...document.querySelectorAll('.eq-lw-cb:checked')].map(cb=>+cb.value);
+  if(_eqEditId!==null){
+    const idx=EQ_LIST.findIndex(e=>e.id===_eqEditId);
+    if(idx>-1) EQ_LIST[idx]={...EQ_LIST[idx],name,qty,status,notes,labworks};
+  } else {
+    EQ_LIST.push({id:_eqNextId++,name,qty,status,notes,labworks});
+  }
+  ss('ec1_eq',EQ_LIST); renderEqTable(); renderCards();
+  closeModal('modalAddEq');
+});
+
+// ── Delete Equipment modal ──
+let _eqDelId=null;
+function openDelEqModal(id){
+  _eqDelId=id;
+  const eq=EQ_LIST.find(e=>e.id===id);
+  document.getElementById('delEqName').textContent=eq?eq.name:'—';
+  openModal('modalDelEq');
+}
+document.getElementById('confirmDelEq').addEventListener('click',()=>{
+  if(_eqDelId===null) return;
+  EQ_LIST=EQ_LIST.filter(e=>e.id!==_eqDelId);
+  ss('ec1_eq',EQ_LIST); _eqDelId=null;
+  renderEqTable(); renderCards();
+  closeModal('modalDelEq');
+});
 
 // ═══════════════════════════════════════════════════
 //  PAGE 4 — GROUP ALLOCATION
@@ -1506,13 +1853,23 @@ function renderWsTable(){
 document.getElementById('wsSearch').addEventListener('input',e=>{ wsQ=e.target.value; renderWsTable(); });
 
 // ═══════════════════════════════════════════════════
+//  BANNER STATS
+// ═══════════════════════════════════════════════════
+function renderBannerStats(){
+  const completedWeeks=ROADMAP.filter(r=>getRoadmapStatus(r.wNums)==='completed').length;
+  const el=document.getElementById('bsStudents');
+  if(el) el.textContent=STUDENTS.length;
+  const el2=document.getElementById('bsComplete');
+  if(el2) el2.textContent=completedWeeks+'/'+ROADMAP.length;
+}
+
+// ═══════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════
+renderCurrentWeekPanel();
 renderCards();
-buildWeekBtns();
-updateBanner();
 buildRoadmap();
-document.getElementById('weekBarWrap').style.display='block';
+renderBannerStats();
 </script>
 </body>
 </html>
