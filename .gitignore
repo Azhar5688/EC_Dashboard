@@ -1,0 +1,37 @@
+# Environment & secrets
+.env
+.env.*
+*.env
+secrets.*
+credentials.*
+config.local.*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build output
+dist/
+build/
+*.min.js
+*.min.css
+
+# Logs
+*.log
+logs/
+
+# Temp
+*.tmp
+*.temp
+.bob/tmp/

@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EC1 – Teaching &amp; Learning Tracker</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d2b55;--navy2:#163a6e;--teal:#0d8f8f;--teal2:#0bb3b3;
+  --bg:#f0f4f8;--surface:#fff;--border:#d1dbe8;
+  --text:#1a2a3a;--muted:#5a718a;
+  --green:#16a34a;--amber:#d97706;--red:#dc2626;
+  --gbg:#dcfce7;--abg:#fef3c7;--rbg:#fee2e2;
+  --r:10px;
+}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ══ TOP HEADER ══ */
+.top-hdr{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1a5276 100%);color:#fff;}
+.hdr-inner{max-width:1200px;margin:0 auto;padding:18px 24px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;}
+.hdr-left{display:flex;align-items:center;gap:13px;}
+.inst-logo{background:rgba(255,255,255,.95);border-radius:9px;padding:4px 7px;display:flex;align-items:center;}
+.inst-logo img{height:46px;width:auto;display:block;object-fit:contain;}
+.inst-logo-fb{height:46px;width:46px;background:var(--teal);border-radius:7px;display:none;align-items:center;justify-content:center;}
+.inst-logo-fb svg{width:26px;height:26px;}
+.hdr-text .inst{font-size:10.5px;font-weight:700;opacity:.72;letter-spacing:.3px;text-transform:uppercase;}
+.hdr-text .dept{font-size:12px;font-weight:600;opacity:.88;}
+.hdr-text .ttl{font-size:19px;font-weight:700;letter-spacing:-.3px;margin-top:1px;}
+.hdr-text .sub{font-size:11px;opacity:.7;}
+.hdr-meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+.bmeta{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:3px 10px;font-size:11.5px;white-space:nowrap;}
+
+/* ══ NAV BAR ══ */
+nav{background:var(--navy2);border-bottom:2px solid var(--teal);}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:stretch;padding:0 16px;gap:2px;}
+.nav-btn{display:flex;align-items:center;gap:7px;padding:11px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;}
+.nav-btn:hover{color:#fff;}
+.nav-btn.active{color:#fff;border-bottom-color:var(--teal2);}
+.nav-btn .nav-ic{font-size:15px;}
+@media(max-width:600px){.nav-btn{padding:10px 10px;font-size:12px;}.nav-btn span.nav-lbl{display:none;}}
+
+/* ══ PAGE WRAPPER ══ */
+.page-wrap{flex:1;max-width:1200px;margin:0 auto;width:100%;padding:22px 24px;}
+.page{display:none;}.page.active{display:block;}
+
+/* ══ SECTION LABEL ══ */
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-left:2px;}
+
+/* ══ WEEK BANNER ══ */
+.wk-banner{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:var(--r);padding:13px 18px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;}
+.wb-ttl{font-weight:700;font-size:15px;color:var(--navy);}
+.wb-top{font-size:13px;color:var(--muted);}
+.wb-pills{display:flex;gap:7px;flex-wrap:wrap;}
+.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.pill-lec{background:#dbeafe;color:#1d4ed8;}.pill-lab{background:#d1fae5;color:#065f46;}
+
+/* ═══ WEEK BAR ═══ */
+.wk-bar{background:var(--navy2);border-top:1px solid rgba(255,255,255,.08);padding:9px 24px;}
+.wk-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.wk-bar-lbl{color:rgba(255,255,255,.7);font-size:12px;white-space:nowrap;}
+.wk-btns{display:flex;gap:4px;flex-wrap:wrap;}
+.wbtn{width:29px;height:29px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.wbtn:hover{background:rgba(255,255,255,.16);}
+.wbtn.active{background:var(--teal);border-color:var(--teal2);color:#fff;}
+
+/* ══ DASHBOARD CARDS ══ */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
+@media(max-width:860px){.cards-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.cards-grid{grid-template-columns:1fr;}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;}
+.card-hd{display:flex;align-items:center;gap:10px;}
+.c-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ico-nv{background:#e8eef6;}.ico-tl{background:#d0f0f0;}.ico-am{background:#fef3c7;}
+.c-ico svg{width:19px;height:19px;}
+.c-name{font-weight:700;font-size:14px;}.c-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:13px;}
+.stat-row:last-child{border-bottom:none;}
+.sl{color:var(--muted);}.sv{font-weight:700;font-size:14px;}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.g{background:var(--gbg);color:var(--green);}.a{background:var(--abg);color:var(--amber);}.r{background:var(--rbg);color:var(--red);}
+.pw{display:flex;flex-direction:column;gap:7px;}
+.ph{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;}
+.pl{color:var(--muted);}.pp{font-weight:700;}
+.pb{height:7px;border-radius:4px;background:#e8eef6;overflow:hidden;}
+.pf{height:100%;border-radius:4px;background:var(--teal);transition:width .4s;}
+.fg{background:var(--green);}.fa{background:var(--amber);}.fn{background:var(--navy);}
+.t-list{display:flex;flex-direction:column;gap:6px;}
+.t-row{display:flex;align-items:center;gap:7px;font-size:12.5px;padding:5px 8px;background:#f8fafc;border-radius:6px;}
+.td2{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.td-g2{background:var(--green);}.td-a2{background:var(--amber);}.td-r2{background:var(--red);}
+.tn{flex:1;}.tb{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.eq-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.eq-item{background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:8px 10px;}
+.eq-nm{color:var(--muted);font-size:11px;margin-bottom:2px;}
+.eq-ct{font-weight:700;font-size:15px;color:var(--navy);}.eq-un{font-size:10px;color:var(--muted);}
+
+/* ══ ROADMAP ══ */
+.rm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:24px;}
+@media(max-width:860px){.rm-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.rm-grid{grid-template-columns:1fr;}}
+.rm-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:var(--r);padding:12px 14px;}
+.rm-card.act{border-top-color:var(--teal);box-shadow:0 2px 8px rgba(13,143,143,.14);}
+.rm-wk{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.4px;margin-bottom:3px;}
+.rm-tp{font-size:13px;font-weight:700;color:var(--navy);line-height:1.4;}
+.rm-ty{font-size:11px;color:var(--muted);margin-top:3px;}
+.rm-st{margin-top:7px;}
+
+/* ══ CHECKLIST ══ */
+.cl-box2{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:24px;}
+.cl-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.cl-ttl{font-weight:700;font-size:15px;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.cl-ttl svg{width:19px;height:19px;}
+.cl-plbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px;}
+.cl-pbg{height:8px;background:#e8eef6;border-radius:4px;overflow:hidden;margin-bottom:16px;}
+.cl-pfill{height:100%;border-radius:4px;background:var(--teal);transition:width .35s;}
+.cl-items{display:flex;flex-direction:column;gap:9px;}
+.cl-item{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none;}
+.cl-item:hover{background:#f8fafc;}
+.cl-item.checked{background:#f0faf0;border-color:#bbf7d0;}
+.cl-chk{width:19px;height:19px;border-radius:5px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:background .15s,border-color .15s;}
+.cl-item.checked .cl-chk{background:var(--green);border-color:var(--green);}
+.cl-tick{display:none;}.cl-item.checked .cl-tick{display:block;}
+.cl-nm{font-weight:600;font-size:13px;}.cl-dc{font-size:12px;color:var(--muted);margin-top:1px;}
+.cl-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:13px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);}
+.btn{border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:none;color:var(--muted);transition:background .15s;}
+.btn:hover{background:var(--bg);}
+.btn-t{background:var(--teal);border-color:var(--teal);color:#fff;}
+.btn-t:hover{background:var(--navy);border-color:var(--navy);}
+.sv-msg{color:var(--green);font-weight:600;font-size:12px;display:none;}
+
+/* ══ TEACHING PLAN PAGE ══ */
+.tp-layout{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start;}
+@media(max-width:820px){.tp-layout{grid-template-columns:1fr;}}
+.tp-sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:sticky;top:16px;}
+.tp-sidebar-hdr{background:#f0f4f8;padding:12px 16px;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.tp-wk-list{max-height:520px;overflow-y:auto;}
+.tp-wk-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;border-bottom:1px solid #f1f5f9;transition:background .12s;font-size:13px;}
+.tp-wk-item:last-child{border-bottom:none;}
+.tp-wk-item:hover{background:#f8fafc;}
+.tp-wk-item.active{background:#e8f4f4;border-left:3px solid var(--teal);}
+.tp-wk-num{width:26px;height:26px;border-radius:6px;background:#e8eef6;color:var(--navy2);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tp-wk-item.active .tp-wk-num{background:var(--teal);color:#fff;}
+.tp-wk-info{flex:1;min-width:0;}
+.tp-wk-lbl{font-weight:600;color:var(--navy);font-size:12.5px;}
+.tp-wk-topic{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tp-wk-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-g{background:var(--green);}.dot-a{background:var(--amber);}.dot-r{background:#d1dbe8;}
+
+.tp-content{display:flex;flex-direction:column;gap:18px;}
+.tp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.tp-card-hdr{padding:13px 18px;background:#f8fafc;border-bottom:1px solid var(--border);font-weight:700;font-size:13px;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.tp-card-body{padding:18px;display:flex;flex-direction:column;gap:13px;}
+.lp-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+@media(max-width:600px){.lp-grid{grid-template-columns:1fr;}}
+.lp-group{display:flex;flex-direction:column;gap:4px;}
+.lp-group.full{grid-column:1/-1;}
+.lp-label{font-size:12px;font-weight:600;color:var(--muted);}
+.lp-input{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;}
+.lp-input:focus{outline:none;border-color:var(--teal);background:#fff;}
+.lp-textarea{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;resize:vertical;min-height:72px;}
+.lp-textarea:focus{outline:none;border-color:var(--teal);background:#fff;}
+.lp-select{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;cursor:pointer;}
+.lp-select:focus{outline:none;border-color:var(--teal);}
+.lp-foot{display:flex;justify-content:flex-end;gap:8px;align-items:center;padding-top:12px;border-top:1px solid var(--border);}
+.lp-saved{color:var(--green);font-size:12px;font-weight:600;display:none;}
+.tp-prog-bar{height:6px;background:#e8eef6;border-radius:4px;overflow:hidden;margin-top:4px;}
+.tp-prog-fill{height:100%;border-radius:4px;background:var(--teal);transition:width .3s;}
+
+/* ══ DATA ENTRY PAGES ══ */
+.de-hdr{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.de-hdr-ico{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.de-hdr-ttl{font-size:17px;font-weight:700;color:var(--navy);}
+.de-hdr-sub{font-size:12px;color:var(--muted);}
+
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+.srch{flex:1;min-width:180px;border:1px solid var(--border);border-radius:7px;padding:7px 12px;font-size:13px;background:var(--bg);color:var(--text);}
+.srch:focus{outline:none;border-color:var(--teal);background:#fff;}
+.de-btn{border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;background:none;color:var(--muted);white-space:nowrap;transition:background .15s;}
+.de-btn:hover{background:var(--bg);}
+.de-btn-t{background:var(--teal);border-color:var(--teal);color:#fff;}
+.de-btn-t:hover{background:var(--navy);border-color:var(--navy);}
+.tbl-count{font-size:12px;color:var(--muted);}
+.info-note{font-size:12px;color:var(--muted);background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:8px 12px;margin-bottom:14px;}
+
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:#f0f4f8;padding:9px 11px;text-align:left;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody td{padding:8px 11px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#f8fafc;}
+.inp-sm{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:12px;background:var(--bg);color:var(--text);width:100%;min-width:55px;}
+.inp-sm:focus{outline:none;border-color:var(--teal);background:#fff;}
+.sel-sm{border:1px solid var(--border);border-radius:5px;padding:4px 6px;font-size:12px;background:var(--bg);color:var(--text);cursor:pointer;}
+.sel-sm:focus{outline:none;border-color:var(--teal);}
+.row-save{background:none;border:1px solid var(--teal);border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;color:var(--teal);cursor:pointer;white-space:nowrap;transition:background .15s;}
+.row-save:hover{background:var(--teal);color:#fff;}
+.stid{font-size:11px;color:var(--muted);}
+.grp-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#e8eef6;color:var(--navy2);white-space:nowrap;}
+
+/* Workshop page */
+.ws-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
+@media(max-width:700px){.ws-grid{grid-template-columns:1fr;}}
+.ws-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;}
+.ws-card-ttl{font-weight:700;font-size:13px;color:var(--navy);margin-bottom:13px;display:flex;align-items:center;gap:6px;}
+.ws-group{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.ws-label{font-size:12px;font-weight:600;color:var(--muted);}
+.ws-input{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;}
+.ws-input:focus{outline:none;border-color:var(--teal);background:#fff;}
+.ws-foot{display:flex;justify-content:flex-end;gap:8px;align-items:center;padding-top:10px;border-top:1px solid var(--border);}
+.ws-saved{color:var(--green);font-size:12px;font-weight:600;display:none;}
+
+/* Group header row */
+.grp-hdr-row td{background:#e8eef6;font-weight:700;font-size:12px;color:var(--navy2);padding:6px 11px;}
+
+/* Group Allocation */
+.alloc-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px;}
+.alloc-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:13px 18px;background:#f0f4f8;border-bottom:1px solid var(--border);}
+.alloc-hdr-ttl{font-weight:700;font-size:14px;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.alloc-body{padding:16px 18px;}
+.alloc-meta{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.alloc-grp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
+.alloc-grp-card{background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.alloc-grp-card-hdr{background:var(--navy2);color:#fff;font-size:12px;font-weight:700;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;}
+.alloc-grp-card-body{padding:8px 10px;display:flex;flex-direction:column;gap:4px;}
+.alloc-stu-row{display:flex;align-items:center;gap:6px;font-size:12px;padding:3px 0;}
+.alloc-stu-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.alloc-stu-id{font-size:10px;color:var(--muted);}
+.alloc-btn-reassign{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;cursor:pointer;color:var(--muted);transition:background .15s;}
+.alloc-btn-reassign:hover{background:var(--teal);border-color:var(--teal);color:#fff;}
+.alloc-empty{font-size:12px;color:var(--muted);font-style:italic;padding:4px 0;}
+
+/* Labwork marks table */
+.lw-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#dbeafe;color:#1d4ed8;white-space:nowrap;}
+.lw-avg-cell{font-weight:700;font-size:12px;}
+
+/* ══ DELETE / ADD MODAL ══ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,25,50,.52);z-index:2000;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:12px;width:100%;max-width:460px;box-shadow:0 8px 40px rgba(0,0,0,.22);overflow:hidden;}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.modal-hdr-ttl{font-weight:700;font-size:15px;color:var(--navy);}
+.modal-x{background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:2px 6px;border-radius:4px;}
+.modal-x:hover{background:var(--bg);}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:12px;}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+.mf-group{display:flex;flex-direction:column;gap:4px;}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.mf-label{font-size:12px;font-weight:600;color:var(--muted);}
+.mf-input{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;}
+.mf-input:focus{outline:none;border-color:var(--teal);background:#fff;}
+.mf-select{border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);width:100%;cursor:pointer;}
+.mf-select:focus{outline:none;border-color:var(--teal);}
+/* Warning box inside delete modal */
+.del-warn{background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:12px 14px;font-size:13px;color:#b91c1c;line-height:1.6;}
+.del-warn strong{display:block;margin-bottom:4px;font-size:13.5px;}
+.del-warn ul{margin:6px 0 0 18px;}
+.del-name{font-weight:700;color:var(--navy);font-size:14px;}
+.btn-del{background:#dc2626;border:none;border-radius:6px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;color:#fff;transition:background .15s;}
+.btn-del:hover{background:#b91c1c;}
+/* row-del button */
+.row-del{background:none;border:1px solid #fecaca;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;cursor:pointer;white-space:nowrap;transition:background .15s;}
+.row-del:hover{background:#fee2e2;}
+
+/* ══ FOOTER ══ */
+footer{text-align:center;padding:16px 24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);background:var(--surface);}
+</style>
+</head>
+<body>
+
+<!-- ══ TOP HEADER ══ -->
+<div class="top-hdr">
+  <div class="hdr-inner">
+    <div class="hdr-left">
+      <div class="inst-logo">
+        <img src="https://www.psa.edu.my/images/logo-psa.png" alt="PSA Logo"
+             onerror="this.style.display='none';document.getElementById('logoFb').style.display='flex'"/>
+        <div class="inst-logo-fb" id="logoFb">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+      </div>
+      <div class="hdr-text">
+        <div class="inst">Politeknik Sultan Salahuddin Abdul Aziz Shah</div>
+        <div class="dept">Department of Electrical Engineering</div>
+        <div class="ttl">Electrical Circuit 1</div>
+        <div class="sub">14-Week Teaching &amp; Learning Tracker &nbsp;|&nbsp; Diploma in Electronic Engineering (Telecommunication)</div>
+      </div>
+    </div>
+    <div class="hdr-meta">
+      <span class="bmeta">📅 Semester 1</span>
+      <span class="bmeta">🕐 2h Lecture + 2h Lab / Week</span>
+      <span class="bmeta">AY 2024 / 2025</span>
+    </div>
+  </div>
+
+  <!-- Week Selector (shown only on Dashboard page) -->
+  <div class="wk-bar" id="weekBarWrap">
+    <div class="wk-bar-inner">
+      <span class="wk-bar-lbl">Select Week:</span>
+      <div class="wk-btns" id="weekBtns"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV BAR ══ -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" data-page="pgDashboard">
+      <span class="nav-ic">📊</span><span class="nav-lbl">Dashboard</span>
+    </button>
+    <button class="nav-btn" data-page="pgStudents">
+      <span class="nav-ic">👤</span><span class="nav-lbl">Student Records</span>
+    </button>
+    <button class="nav-btn" data-page="pgAssessment">
+      <span class="nav-ic">📋</span><span class="nav-lbl">Assessment Tasks</span>
+    </button>
+    <button class="nav-btn" data-page="pgWorkshop">
+      <span class="nav-ic">🔧</span><span class="nav-lbl">Workshop Status</span>
+    </button>
+    <button class="nav-btn" data-page="pgTeaching">
+      <span class="nav-ic">📅</span><span class="nav-lbl">Teaching Plan</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════ -->
+<!--  PAGE 1 — DASHBOARD               -->
+<!-- ══════════════════════════════════ -->
+<div class="page-wrap">
+
+<div class="page active" id="pgDashboard">
+
+  <!-- Week Banner -->
+  <div class="wk-banner">
+    <div>
+      <div class="wb-ttl" id="wbTitle">Week 1</div>
+      <div class="wb-top" id="wbTopic">Introduction to Electrical Circuits · Foundation</div>
+    </div>
+    <div class="wb-pills">
+      <span class="pill pill-lec">📖 2-Hour Lecture</span>
+      <span class="pill pill-lab">🔬 2-Hour Laboratory</span>
+    </div>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="sec-lbl">Dashboard Overview</div>
+  <div class="cards-grid">
+    <div class="card" id="cardStudents"></div>
+    <div class="card" id="cardTasks"></div>
+    <div class="card" id="cardWorkshop"></div>
+  </div>
+
+  <!-- Roadmap -->
+  <div class="sec-lbl">14-Week Teaching Roadmap</div>
+  <div class="info-note" style="margin-bottom:14px">📌 Roadmap status reflects lesson plan completion from the <strong>Teaching Plan</strong> page. Click any week card to jump directly to its lesson plan.</div>
+  <div class="rm-grid" id="roadmapGrid"></div>
+
+</div><!-- /pgDashboard -->
+
+<!-- ══════════════════════════════════ -->
+<!--  PAGE 2 — STUDENT RECORDS         -->
+<!-- ══════════════════════════════════ -->
+<div class="page" id="pgStudents">
+
+  <div class="de-hdr">
+    <div class="de-hdr-ico ico-nv" style="background:#e8eef6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#163a6e" stroke-width="2" stroke-linecap="round" width="22" height="22">
+        <circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+        <circle cx="17" cy="9" r="2"/><path d="M21 20c0-2.2-1.8-4-4-4"/>
+      </svg>
+    </div>
+    <div>
+      <div class="de-hdr-ttl">Student Records</div>
+      <div class="de-hdr-sub">Class EL1-T01 &nbsp;·&nbsp; 32 Students &nbsp;·&nbsp; Edit names, IDs, attendance and practical status per student</div>
+    </div>
+  </div>
+
+  <div class="info-note">✏️ Edit any field directly in the table then click <strong>Save</strong> on that row. Use <strong>+ Add Student</strong> to add a new record or <strong>🗑 Delete</strong> to remove a student and all their related data.</div>
+
+  <div class="toolbar">
+    <input class="srch" id="stuSearch" type="text" placeholder="🔍  Search by name or student ID…"/>
+    <span class="tbl-count" id="stuCount"></span>
+    <button class="de-btn de-btn-t" id="btnAddStu">+ Add Student</button>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Student ID</th><th>Full Name</th><th>Gender</th>
+          <th>Attendance&nbsp;(%)</th><th>Practical Status</th><th>Remarks</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="stuBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ══ MODAL: Add Student ══ -->
+  <div class="modal-overlay" id="modalAddStu">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <span class="modal-hdr-ttl">➕ Add New Student</span>
+        <button class="modal-x" data-close-modal="modalAddStu">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="mf-row">
+          <div class="mf-group">
+            <label class="mf-label">Student ID <span style="color:var(--red)">*</span></label>
+            <input class="mf-input" id="add_id" type="text" placeholder="e.g. 2024-EL-033"/>
+          </div>
+          <div class="mf-group">
+            <label class="mf-label">Gender</label>
+            <select class="mf-select" id="add_gender">
+              <option value="M">Male (M)</option>
+              <option value="F">Female (F)</option>
+            </select>
+          </div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Full Name <span style="color:var(--red)">*</span></label>
+          <input class="mf-input" id="add_name" type="text" placeholder="e.g. Muhammad Hafiz bin Ahmad"/>
+        </div>
+        <div class="mf-row">
+          <div class="mf-group">
+            <label class="mf-label">Attendance (%)</label>
+            <input class="mf-input" id="add_att" type="number" min="0" max="100" value="100"/>
+          </div>
+          <div class="mf-group">
+            <label class="mf-label">Practical Status</label>
+            <select class="mf-select" id="add_prac">
+              <option>Pending</option>
+              <option>Completed</option>
+              <option>Attention</option>
+            </select>
+          </div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Remarks (optional)</label>
+          <input class="mf-input" id="add_rem" type="text" placeholder="e.g. New enrolment"/>
+        </div>
+        <div id="addStuErr" style="color:var(--red);font-size:12px;display:none;"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal="modalAddStu">Cancel</button>
+        <button class="de-btn de-btn-t" id="confirmAddStu">Add Student</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL: Delete Student ══ -->
+  <div class="modal-overlay" id="modalDelStu">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <span class="modal-hdr-ttl">🗑️ Delete Student</span>
+        <button class="modal-x" data-close-modal="modalDelStu">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px;color:var(--muted)">You are about to permanently delete:</p>
+        <div class="del-name" id="delStuName">—</div>
+        <div class="del-warn">
+          <strong>⚠️ Warning — This action cannot be undone.</strong>
+          The following data for this student will be permanently deleted:
+          <ul>
+            <li>Student profile (name, ID, attendance, practical status)</li>
+            <li>All Assessment marks (Quizzes, Worksheets, Test, Exam)</li>
+            <li>Workshop / Lab performance data</li>
+          </ul>
+        </div>
+        <p style="font-size:12px;color:var(--muted)">Please confirm that you want to proceed.</p>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal="modalDelStu">Cancel</button>
+        <button class="btn-del" id="confirmDelStu">Yes, Delete Permanently</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pgStudents -->
+
+<!-- ══════════════════════════════════ -->
+<!--  PAGE 3 — ASSESSMENT TASKS        -->
+<!-- ══════════════════════════════════ -->
+<div class="page" id="pgAssessment">
+
+  <div class="de-hdr">
+    <div class="de-hdr-ico" style="background:#d0f0f0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0d6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+    </div>
+    <div>
+      <div class="de-hdr-ttl">Assessment Tasks</div>
+      <div class="de-hdr-sub">Enter marks per student: 5 Quizzes · 5 Worksheets · Integrated Test · Final Exam &nbsp;(marks out of 100, leave blank if not yet assessed)</div>
+    </div>
+  </div>
+
+  <div class="info-note">📝 Enter or update marks per student then click <strong>Save</strong>. The Dashboard Overview card updates automatically.</div>
+
+  <div class="toolbar">
+    <input class="srch" id="taskSearch" type="text" placeholder="🔍  Search student…"/>
+    <span class="tbl-count" id="taskCount"></span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Student ID</th><th>Name</th>
+          <th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th>
+          <th>WS1</th><th>WS2</th><th>WS3</th><th>WS4</th><th>WS5</th>
+          <th>Test</th><th>Exam</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="taskBody"></tbody>
+    </table>
+  </div>
+
+</div><!-- /pgAssessment -->
+
+<!-- ══════════════════════════════════ -->
+<!--  PAGE 4 — WORKSHOP STATUS         -->
+<!-- ══════════════════════════════════ -->
+<div class="page" id="pgWorkshop">
+
+  <div class="de-hdr">
+    <div class="de-hdr-ico" style="background:#fef3c7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3-3a1 1 0 000-1.4l-1.6-1.6a1 1 0 00-1.4 0z"/>
+        <path d="M13 9l-9.4 9.4a2 2 0 002.8 2.8L16 12"/>
+      </svg>
+    </div>
+    <div>
+      <div class="de-hdr-ttl">Workshop Status</div>
+      <div class="de-hdr-sub">Laboratory readiness, equipment inventory and lab performance per student group (3 students per group)</div>
+    </div>
+  </div>
+
+  <!-- Lab & Equipment Form -->
+  <div class="sec-lbl">Laboratory &amp; Equipment Status</div>
+  <div class="ws-grid">
+    <div class="ws-card">
+      <div class="ws-card-ttl">🏫 Laboratory Status</div>
+      <div class="ws-group">
+        <label class="ws-label">Lab Readiness</label>
+        <select class="ws-input" id="w_labReady">
+          <option value="ready">Ready</option>
+          <option value="not-ready">Not Ready</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+      </div>
+      <div class="ws-group">
+        <label class="ws-label">Safety Inspection</label>
+        <select class="ws-input" id="w_safety">
+          <option value="passed">Passed</option>
+          <option value="pending">Pending</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+      <div class="ws-group">
+        <label class="ws-label">Equipment Faults Logged</label>
+        <input class="ws-input" id="w_faults" type="number" min="0" max="99"/>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-card-ttl">🔌 Equipment Inventory</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="ws-group"><label class="ws-label">Multimeters – Available</label><input class="ws-input" id="w_mmAvail" type="number" min="0"/></div>
+        <div class="ws-group"><label class="ws-label">Multimeters – Total</label><input class="ws-input" id="w_mmTotal" type="number" min="1"/></div>
+        <div class="ws-group"><label class="ws-label">DC Power Supplies – Available</label><input class="ws-input" id="w_psAvail" type="number" min="0"/></div>
+        <div class="ws-group"><label class="ws-label">DC Power Supplies – Total</label><input class="ws-input" id="w_psTotal" type="number" min="1"/></div>
+        <div class="ws-group"><label class="ws-label">Breadboards – Available</label><input class="ws-input" id="w_bbAvail" type="number" min="0"/></div>
+        <div class="ws-group"><label class="ws-label">Breadboards – Total</label><input class="ws-input" id="w_bbTotal" type="number" min="1"/></div>
+        <div class="ws-group" style="grid-column:1/-1"><label class="ws-label">Circuit Components</label>
+          <select class="ws-input" id="w_components">
+            <option value="in-stock">In Stock</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+          </select>
+        </div>
+      </div>
+      <div class="ws-foot">
+        <span class="ws-saved" id="wsSaved">✓ Saved!</span>
+        <button class="de-btn" id="wsReset">Reset</button>
+        <button class="de-btn de-btn-t" id="wsSave">Save Status</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GROUP ALLOCATION ══ -->
+  <div class="sec-lbl">Practical Lab Group Allocation</div>
+
+  <div class="alloc-box">
+    <div class="alloc-hdr">
+      <div class="alloc-hdr-ttl">🧪 Lab Groups Setup</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <label style="font-size:12px;color:var(--muted);font-weight:600">Students per group:</label>
+        <select class="sel-sm" id="allocGroupSize">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button class="de-btn de-btn-t" id="btnAutoAlloc">Auto-Assign Groups</button>
+        <button class="de-btn" id="btnClearAlloc">Clear All Groups</button>
+      </div>
+    </div>
+    <div class="alloc-body">
+      <div class="alloc-meta" id="allocMeta"></div>
+      <div class="alloc-grp-cards" id="allocCards"></div>
+    </div>
+  </div>
+
+  <!-- ══ LABWORK MARKS ══ -->
+  <div class="sec-lbl">Labwork Assessment Marks (5 Labworks)</div>
+  <div class="info-note">📝 Enter marks per student for each labwork (out of 20). The system calculates the average automatically. Click <strong>Save</strong> on any row to update.</div>
+
+  <div class="toolbar">
+    <input class="srch" id="wsSearch" type="text" placeholder="🔍  Search student or group…"/>
+    <span class="tbl-count" id="wsCount"></span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Group</th><th>Student ID</th><th>Name</th>
+          <th>LW1<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>LW2<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>LW3<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>LW4<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>LW5<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>Average<br><span style="font-weight:400;font-size:10px">/20</span></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="wsBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ══ MODAL: Reassign Student ══ -->
+  <div class="modal-overlay" id="modalReassign">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <span class="modal-hdr-ttl">🔄 Reassign to Group</span>
+        <button class="modal-x" data-close-modal="modalReassign">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px;color:var(--muted)">Reassigning:</p>
+        <div class="del-name" id="reassignStuName">—</div>
+        <div class="mf-group">
+          <label class="mf-label">Assign to Group</label>
+          <select class="mf-select" id="reassignGroupSel"></select>
+        </div>
+        <div id="reassignErr" style="color:var(--red);font-size:12px;display:none;"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal="modalReassign">Cancel</button>
+        <button class="de-btn de-btn-t" id="confirmReassign">Reassign</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pgWorkshop -->
+
+<!-- ══════════════════════════════════════ -->
+<!--  PAGE 5 — TEACHING PLAN & CHECKLIST   -->
+<!-- ══════════════════════════════════════ -->
+<div class="page" id="pgTeaching">
+
+  <div class="de-hdr">
+    <div class="de-hdr-ico" style="background:#e8eef6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#163a6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+        <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+      </svg>
+    </div>
+    <div>
+      <div class="de-hdr-ttl">Teaching Plan &amp; Checklist</div>
+      <div class="de-hdr-sub">Lesson plan input per week · Weekly teaching checklist · Status syncs to Dashboard Roadmap automatically</div>
+    </div>
+  </div>
+
+  <div class="tp-layout">
+
+    <!-- Sidebar: week selector list -->
+    <div class="tp-sidebar">
+      <div class="tp-sidebar-hdr">📅 Select Week</div>
+      <div class="tp-wk-list" id="tpWkList"></div>
+    </div>
+
+    <!-- Main: lesson plan + checklist for selected week -->
+    <div class="tp-content">
+
+      <!-- Lesson Plan -->
+      <div class="tp-card">
+        <div class="tp-card-hdr">
+          📖 Lesson Plan — <span id="tpWeekLabel">Week 1</span>
+        </div>
+        <div class="tp-card-body">
+          <div class="lp-grid">
+            <div class="lp-group full">
+              <label class="lp-label">Topic / Title</label>
+              <input class="lp-input" id="lp_topic" type="text" placeholder="e.g. Introduction to Electrical Circuits"/>
+            </div>
+            <div class="lp-group full">
+              <label class="lp-label">Learning Objectives (one per line)</label>
+              <textarea class="lp-textarea" id="lp_objectives" placeholder="e.g. Students can define voltage, current and resistance&#10;Students can apply Ohm's Law to solve basic circuit problems"></textarea>
+            </div>
+            <div class="lp-group">
+              <label class="lp-label">Teaching Method</label>
+              <select class="lp-select" id="lp_method">
+                <option value="">— Select —</option>
+                <option>Lecture</option>
+                <option>Lecture + Lab Practical</option>
+                <option>Problem-Based Learning</option>
+                <option>Demonstration</option>
+                <option>Group Discussion</option>
+                <option>Flipped Classroom</option>
+              </select>
+            </div>
+            <div class="lp-group">
+              <label class="lp-label">Delivery Mode</label>
+              <select class="lp-select" id="lp_mode">
+                <option value="">— Select —</option>
+                <option>Face-to-Face</option>
+                <option>Online (Synchronous)</option>
+                <option>Blended</option>
+              </select>
+            </div>
+            <div class="lp-group full">
+              <label class="lp-label">Teaching Materials / Resources</label>
+              <input class="lp-input" id="lp_materials" type="text" placeholder="e.g. Slides Chapter 1, DC Lab Sheet WS1, multimeter, breadboard"/>
+            </div>
+            <div class="lp-group">
+              <label class="lp-label">Assessment / Activity</label>
+              <input class="lp-input" id="lp_assessment" type="text" placeholder="e.g. Quiz 1, Lab Report 1"/>
+            </div>
+            <div class="lp-group">
+              <label class="lp-label">Lesson Status</label>
+              <select class="lp-select" id="lp_status">
+                <option value="pending">— Pending —</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+            <div class="lp-group full">
+              <label class="lp-label">Lecturer Notes / Remarks</label>
+              <textarea class="lp-textarea" id="lp_notes" placeholder="Additional notes, student issues, follow-up actions…" style="min-height:60px"></textarea>
+            </div>
+          </div>
+          <div class="lp-foot">
+            <span class="lp-saved" id="lpSaved">✓ Saved!</span>
+            <button class="de-btn" id="lpReset">Reset Week</button>
+            <button class="de-btn de-btn-t" id="lpSave">Save Lesson Plan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching Checklist -->
+      <div class="tp-card">
+        <div class="tp-card-hdr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          Weekly Teaching Checklist — <span id="tpClWeekLabel">Week 1</span>
+        </div>
+        <div class="tp-card-body">
+          <div class="cl-plbl"><span id="clProgLbl">Completed 0 of 5 items</span><span id="clProgPct">0%</span></div>
+          <div class="cl-pbg"><div class="cl-pfill" id="clFill" style="width:0%"></div></div>
+          <div class="cl-items" id="clItems"></div>
+          <div class="cl-foot">
+            <span>Auto-saved to browser.</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="sv-msg" id="savedMsg">✓ Saved</span>
+              <button class="btn" id="btnClear">Clear</button>
+              <button class="btn btn-t" id="btnAll">Mark All Complete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tp-content -->
+  </div><!-- /tp-layout -->
+
+</div><!-- /pgTeaching -->
+
+</div><!-- /page-wrap -->
+
+<footer>Made with <strong>IBM Bob</strong> &nbsp;·&nbsp; Electrical Circuit 1 &nbsp;·&nbsp; TVET Diploma in Electronic Engineering (Telecommunication)</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  STATIC CONFIG
+// ═══════════════════════════════════════════════════
+const WEEK_DATA = [
+  {topic:"Introduction to Electrical Circuits",type:"Foundation"},
+  {topic:"Introduction to Electrical Circuits",type:"Foundation"},
+  {topic:"Ohm's Law, KCL & KVL",type:"Core Theory"},
+  {topic:"Ohm's Law, KCL & KVL",type:"Core Theory"},
+  {topic:"Thévenin & Norton Theorems",type:"Circuit Analysis"},
+  {topic:"Thévenin & Norton Theorems",type:"Circuit Analysis"},
+  {topic:"Capacitance & Inductance",type:"Energy Storage"},
+  {topic:"Capacitance & Inductance",type:"Energy Storage"},
+  {topic:"Electromagnetism",type:"Applied Theory"},
+  {topic:"Electromagnetism",type:"Applied Theory"},
+  {topic:"Integrated Test",type:"Assessment"},
+  {topic:"Troubleshooting & Revision",type:"Skills Consolidation"},
+  {topic:"Troubleshooting & Revision",type:"Skills Consolidation"},
+  {topic:"Final Review & Examination",type:"Examination"},
+];
+const ROADMAP = [
+  {label:"W1–W2",topic:"Introduction to Electrical Circuits",type:"Foundation",wNums:[1,2],status:"completed"},
+  {label:"W3–W4",topic:"Ohm's Law, KCL & KVL",type:"Core Theory",wNums:[3,4],status:"completed"},
+  {label:"W5–W6",topic:"Thévenin & Norton Theorems",type:"Circuit Analysis",wNums:[5,6],status:"completed"},
+  {label:"W7–W8",topic:"Capacitance & Inductance",type:"Energy Storage",wNums:[7,8],status:"in-progress"},
+  {label:"W9–W10",topic:"Electromagnetism",type:"Applied Theory",wNums:[9,10],status:"pending"},
+  {label:"W11",topic:"Integrated Test",type:"Assessment",wNums:[11],status:"pending"},
+  {label:"W12–W13",topic:"Troubleshooting & Revision",type:"Skills Consolidation",wNums:[12,13],status:"pending"},
+  {label:"W14",topic:"Final Review & Examination",type:"Examination",wNums:[14],status:"pending"},
+];
+const CL_ITEMS = [
+  {id:"safety",   label:"Safety Briefing Completed",      desc:"PPE reminder & lab rules reviewed with all students"},
+  {id:"materials",label:"Teaching Materials Prepared",    desc:"Slides, notes, worksheets and reference sheets ready"},
+  {id:"equipment",label:"Laboratory Equipment Checked",   desc:"All instruments tested, components verified and set up"},
+  {id:"leclab",   label:"Lecture & Practical Completed",  desc:"2-hour lecture delivered + 2-hour lab session conducted"},
+  {id:"marks",    label:"Assessment Marks Recorded",      desc:"Quiz / worksheet scores entered into the mark sheet"},
+];
+
+// ═══════════════════════════════════════════════════
+//  DUMMY DATABASE — 32 Students (editable)
+// ═══════════════════════════════════════════════════
+const DUMMY = [
+  {id:"2024-EL-001",name:"Ahmad Farid bin Razak",      gender:"M"},
+  {id:"2024-EL-002",name:"Nurul Ain binti Hamid",       gender:"F"},
+  {id:"2024-EL-003",name:"Muhammad Haziq bin Zainal",   gender:"M"},
+  {id:"2024-EL-004",name:"Siti Nabilah binti Ismail",   gender:"F"},
+  {id:"2024-EL-005",name:"Amirul Hakim bin Yahya",      gender:"M"},
+  {id:"2024-EL-006",name:"Nur Hidayah binti Ahmad",     gender:"F"},
+  {id:"2024-EL-007",name:"Mohamad Arif bin Sulaiman",   gender:"M"},
+  {id:"2024-EL-008",name:"Farhana binti Othman",        gender:"F"},
+  {id:"2024-EL-009",name:"Khairul Nizam bin Hassan",    gender:"M"},
+  {id:"2024-EL-010",name:"Aishah binti Abdul Rahim",    gender:"F"},
+  {id:"2024-EL-011",name:"Hafizuddin bin Mohd Noor",    gender:"M"},
+  {id:"2024-EL-012",name:"Nurul Izzah binti Rosli",     gender:"F"},
+  {id:"2024-EL-013",name:"Zulhilmi bin Ibrahim",        gender:"M"},
+  {id:"2024-EL-014",name:"Hanis Syafiqa binti Yusuf",   gender:"F"},
+  {id:"2024-EL-015",name:"Muhammad Izzat bin Kamal",    gender:"M"},
+  {id:"2024-EL-016",name:"Norzahra binti Mohd Ali",     gender:"F"},
+  {id:"2024-EL-017",name:"Syafiq Danial bin Rusli",     gender:"M"},
+  {id:"2024-EL-018",name:"Nur Syazwani binti Zainol",   gender:"F"},
+  {id:"2024-EL-019",name:"Aiman Fakhri bin Bakar",      gender:"M"},
+  {id:"2024-EL-020",name:"Siti Zulaikha binti Razif",   gender:"F"},
+  {id:"2024-EL-021",name:"Irfan Haikal bin Mansor",     gender:"M"},
+  {id:"2024-EL-022",name:"Nur Fatihah binti Daud",      gender:"F"},
+  {id:"2024-EL-023",name:"Danial Asyraf bin Ghazali",   gender:"M"},
+  {id:"2024-EL-024",name:"Izzatul Husna binti Salleh",  gender:"F"},
+  {id:"2024-EL-025",name:"Luqman Hakim bin Zakaria",    gender:"M"},
+  {id:"2024-EL-026",name:"Nadhirah binti Mohd Isa",     gender:"F"},
+  {id:"2024-EL-027",name:"Hafiz Azri bin Ramli",        gender:"M"},
+  {id:"2024-EL-028",name:"Nur Aisyah binti Zulkifli",   gender:"F"},
+  {id:"2024-EL-029",name:"Ridhwan bin Mokhtar",         gender:"M"},
+  {id:"2024-EL-030",name:"Shafiqah Izzati binti Nawi",  gender:"F"},
+  {id:"2024-EL-031",name:"Zikri Azfar bin Nordin",      gender:"M"},
+  {id:"2024-EL-032",name:"Nur Diyanah binti Saidi",     gender:"F"},
+];
+const ATT0  = [92,85,78,95,60,88,72,90,85,55,93,80,75,88,70,95,83,91,65,87,78,94,82,76,89,73,96,84,68,91,77,86];
+const PRAC0 = ["Completed","Completed","Pending","Completed","Attention","Completed","Pending","Completed","Completed","Attention","Completed","Completed","Pending","Completed","Attention","Completed","Completed","Completed","Pending","Completed","Completed","Completed","Completed","Pending","Completed","Attention","Completed","Completed","Pending","Completed","Completed","Completed"];
+const REM0  = ["","","Late submissions","","Absent >3 weeks","","","","","Absent frequently","","","","","Low quiz scores","","","","","","","","","","","Needs support","","","","","",""];
+
+// Fixed seed marks
+function seedMarks(i){
+  const s=[72,85,60,91,55,88,70,93,84,50,90,78,68,87,63,94,81,92,58,86,75,95,80,71,88,65,97,83,62,90,76,85];
+  const d=[0,5,-5,8,-3,10,3,7,2,-8,6,-2,4,-1,-6,9,1,8,-4,5,3,7,-3,2,6,-5,8,4,-2,7,1,6];
+  const mk=(b,o)=>Math.max(0,Math.min(100,b+o));
+  const b=s[i];
+  return{Q1:mk(b,d[0]),Q2:mk(b,d[1]),Q3:mk(b,d[2]),Q4:mk(b,d[3]),Q5:mk(b,d[4]),
+         WS1:mk(b,d[5]),WS2:mk(b,d[6]),WS3:mk(b,d[7]),WS4:mk(b,d[8]),WS5:mk(b,d[9]),
+         Test:null,Exam:null};
+}
+
+// Lab performance dummy per student (5 labworks, each /20)
+function seedLab(i){
+  const base=[17,18,15,19,12,18,14,19,17,11,18,16,14,17,13,19,16,18,12,17,15,19,16,15,18,13,19,17,13,18,15,17][i%32];
+  const offsets=[0,1,-1,2,-2,1,0,1,-1,2];
+  const mk=(b,o)=>Math.max(0,Math.min(20,b+o));
+  return{
+    group: Math.floor(i/3)+1,
+    lw1: mk(base, offsets[0]),
+    lw2: mk(base, offsets[1]),
+    lw3: mk(base, offsets[2]),
+    lw4: mk(base, offsets[3]),
+    lw5: mk(base, offsets[4]),
+  };
+}
+
+// ═══════════════════════════════════════════════════
+//  LOCAL STORAGE
+// ═══════════════════════════════════════════════════
+const ls  = (k,d)=>{ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch{ return d; } };
+const ss  = (k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch{} };
+
+let STUDENTS = ls('ec1_stu', DUMMY.map((s,i)=>({...s,attendance:ATT0[i],practical:PRAC0[i],remarks:REM0[i]})));
+let MARKS    = ls('ec1_mrk', DUMMY.map((_,i)=>seedMarks(i)));
+let LAB      = ls('ec1_lab', DUMMY.map((_,i)=>seedLab(i)));
+// Migrate old LAB records that don't have the new fields
+LAB = LAB.map((lb,i)=>({
+  group: (lb.group!==undefined && lb.group!==null) ? lb.group : Math.floor(i/3)+1,
+  lw1: lb.lw1!==undefined ? lb.lw1 : null,
+  lw2: lb.lw2!==undefined ? lb.lw2 : null,
+  lw3: lb.lw3!==undefined ? lb.lw3 : null,
+  lw4: lb.lw4!==undefined ? lb.lw4 : null,
+  lw5: lb.lw5!==undefined ? lb.lw5 : null,
+}));
+const WS_DEF = {labReady:"ready",safety:"passed",faults:1,mmAvail:30,mmTotal:32,psAvail:16,psTotal:16,bbAvail:28,bbTotal:32,components:"in-stock"};
+let WS = ls('ec1_ws', WS_DEF);
+
+const clKey = w=>`ec1_cl_w${w}`;
+const ldCl  = w=>{ try{ return JSON.parse(localStorage.getItem(clKey(w)))||{}; }catch{ return{}; } };
+const svCl  = (w,d)=>{ try{ localStorage.setItem(clKey(w),JSON.stringify(d)); }catch{} };
+
+// Groups: derived from LAB[i].group
+function groupOf(idx){ return (LAB[idx] && LAB[idx].group) ? LAB[idx].group : Math.floor(idx/3)+1; }
+function totalGroups(){ const gs=LAB.map(lb=>lb.group||0); return gs.length?Math.max(...gs):0; }
+
+// ═══════════════════════════════════════════════════
+//  COMPUTED STATS → DASHBOARD CARDS
+// ═══════════════════════════════════════════════════
+function stats(){
+  const n=STUDENTS.length;
+  const attAvg=Math.round(STUDENTS.reduce((a,s)=>a+Number(s.attendance),0)/n);
+  const pracPct=Math.round(STUDENTS.filter(s=>s.practical==="Completed").length/n*100);
+  const attn=STUDENTS.filter(s=>s.practical==="Attention"||Number(s.attendance)<70).length;
+  const qDone=MARKS.filter(m=>m.Q1&&m.Q2&&m.Q3&&m.Q4&&m.Q5).length;
+  const wsDone=MARKS.filter(m=>m.WS1&&m.WS2&&m.WS3&&m.WS4&&m.WS5).length;
+  const testDone=MARKS.filter(m=>m.Test!==null).length;
+  const examDone=MARKS.filter(m=>m.Exam!==null).length;
+  const testSt=testDone===n?"completed":testDone>0?"in-progress":"pending";
+  const examSt=examDone===n?"completed":examDone>0?"in-progress":"pending";
+  const ovr=Math.round(((qDone*5+wsDone*5+testDone+examDone)/(n*12))*100);
+  const mrkPct=Math.round(((qDone+wsDone+testDone+examDone)/(n*4))*100);
+  return{n,attAvg,pracPct,attn,qDone,wsDone,testDone,examDone,testSt,examSt,ovr,mrkPct};
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDER: DASHBOARD CARDS
+// ═══════════════════════════════════════════════════
+const fc=p=>p>=80?'fg':p>=50?'fa':'fn';
+function tsBadge(s){ return s==='completed'?['g','Completed']:s==='in-progress'?['a','In Progress']:['r','Pending']; }
+function labBadge(v){ return v==='ready'?['g','Ready']:v==='maintenance'?['a','Maintenance']:['r','Not Ready']; }
+function sfBadge(v) { return v==='passed'?['g','Passed']:v==='pending'?['a','Pending']:['r','Failed']; }
+function ccBadge(v) { return v==='in-stock'?['g','In Stock']:v==='low'?['a','Low Stock']:['r','Out of Stock']; }
+function epct(a,t)  { return t>0?Math.round(a/t*100):0; }
+
+function renderCards(){
+  const {n,attAvg,pracPct,attn,qDone,wsDone,testSt,examSt,ovr,mrkPct}=stats();
+  // Student card
+  document.getElementById('cardStudents').innerHTML=`
+    <div class="card-hd">
+      <div class="c-ico ico-nv"><svg viewBox="0 0 24 24" fill="none" stroke="#163a6e" stroke-width="2" stroke-linecap="round" width="19" height="19">
+        <circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+        <circle cx="17" cy="9" r="2"/><path d="M21 20c0-2.2-1.8-4-4-4"/></svg></div>
+      <div><div class="c-name">Students</div><div class="c-desc">Class EL1-T01 · Sem 1, 2024/25</div></div>
+    </div>
+    <div>
+      <div class="stat-row"><span class="sl">Total Enrolled</span><span class="sv">${n}</span></div>
+      <div class="stat-row"><span class="sl">Attendance Rate</span><span class="sv">${attAvg}%</span></div>
+      <div class="stat-row"><span class="sl">Practical Completion</span><span class="sv">${pracPct}%</span></div>
+      <div class="stat-row"><span class="sl">Requiring Attention</span><span class="badge ${attn>0?'a':'g'}">${attn} Student${attn!==1?'s':''}</span></div>
+    </div>
+    <div class="pw">
+      <div><div class="ph"><span class="pl">Attendance</span><span class="pp">${attAvg}%</span></div><div class="pb"><div class="pf ${fc(attAvg)}" style="width:${attAvg}%"></div></div></div>
+      <div><div class="ph"><span class="pl">Practical Completion</span><span class="pp">${pracPct}%</span></div><div class="pb"><div class="pf ${fc(pracPct)}" style="width:${pracPct}%"></div></div></div>
+    </div>`;
+  // Task card
+  const [tC,tL]=tsBadge(testSt),[eC,eL]=tsBadge(examSt);
+  const qC=qDone>=n?'g':qDone>0?'a':'r', wsC=wsDone>=n?'g':wsDone>0?'a':'r';
+  document.getElementById('cardTasks').innerHTML=`
+    <div class="card-hd">
+      <div class="c-ico ico-tl"><svg viewBox="0 0 24 24" fill="none" stroke="#0d6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div><div class="c-name">Assessment Tasks</div><div class="c-desc">Quizzes · Worksheets · Test · Exam</div></div>
+    </div>
+    <div class="t-list">
+      <div class="t-row"><span class="td2 td-${qC}2"></span><span class="tn">Topic Quizzes (5)</span><span class="tb badge ${qC}">${qDone}/${n} complete</span></div>
+      <div class="t-row"><span class="td2 td-${wsC}2"></span><span class="tn">Practical Worksheets (5)</span><span class="tb badge ${wsC}">${wsDone}/${n} complete</span></div>
+      <div class="t-row"><span class="td2 td-${tC}2"></span><span class="tn">Integrated Test</span><span class="tb badge ${tC}">${tL}</span></div>
+      <div class="t-row"><span class="td2 td-${eC}2"></span><span class="tn">Final Examination</span><span class="tb badge ${eC}">${eL}</span></div>
+    </div>
+    <div class="pw">
+      <div><div class="ph"><span class="pl">Overall Progress</span><span class="pp">${ovr}%</span></div><div class="pb"><div class="pf ${fc(ovr)}" style="width:${ovr}%"></div></div></div>
+      <div><div class="ph"><span class="pl">Marks Recorded</span><span class="pp">${mrkPct}%</span></div><div class="pb"><div class="pf fn" style="width:${mrkPct}%"></div></div></div>
+    </div>`;
+  // Workshop card
+  const d=WS;
+  const [lC,lL]=labBadge(d.labReady),[sC,sL]=sfBadge(d.safety),[cC,cL]=ccBadge(d.components);
+  const fb=d.faults===0?`<span class="badge g">No Faults</span>`:`<span class="badge ${d.faults>3?'r':'a'}">${d.faults} Fault${d.faults!==1?'s':''} Logged</span>`;
+  // Labwork stats
+  const lwFields=['lw1','lw2','lw3','lw4','lw5'];
+  const lwDone=lwFields.map(f=>LAB.filter(lb=>lb[f]!==null&&lb[f]!==undefined).length);
+  const lwAll=lwFields.every(f=>LAB.every(lb=>lb[f]!==null&&lb[f]!==undefined));
+  const lwAny=lwFields.some(f=>LAB.some(lb=>lb[f]!==null&&lb[f]!==undefined));
+  const lwC=lwAll?'g':lwAny?'a':'r';
+  const lwPct=Math.round(lwDone.reduce((a,b)=>a+b,0)/(LAB.length*5)*100);
+  const tg=Math.max(...LAB.map(lb=>lb.group||0),0);
+  document.getElementById('cardWorkshop').innerHTML=`
+    <div class="card-hd">
+      <div class="c-ico ico-am"><svg viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="19" height="19">
+        <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3-3a1 1 0 000-1.4l-1.6-1.6a1 1 0 00-1.4 0z"/>
+        <path d="M13 9l-9.4 9.4a2 2 0 002.8 2.8L16 12"/></svg></div>
+      <div><div class="c-name">Workshop Status</div><div class="c-desc">Laboratory Readiness · ${tg} Practical Groups</div></div>
+    </div>
+    <div>
+      <div class="stat-row"><span class="sl">Lab Readiness</span><span class="badge ${lC}">${lL}</span></div>
+      <div class="stat-row"><span class="sl">Safety Inspection</span><span class="badge ${sC}">${sL}</span></div>
+      <div class="stat-row"><span class="sl">Equipment Status</span>${fb}</div>
+      <div class="stat-row"><span class="sl">Labwork Marks Recorded</span><span class="badge ${lwC}">${lwPct}%</span></div>
+    </div>
+    <div class="t-list" style="margin-top:4px">
+      ${lwFields.map((f,fi)=>{const cnt=lwDone[fi];const c=cnt>=n?'g':cnt>0?'a':'r';return `<div class="t-row"><span class="td2 td-${c}2"></span><span class="tn">Labwork ${fi+1}</span><span class="tb badge ${c}">${cnt}/${n} entered</span></div>`;}).join('')}
+    </div>
+    <div class="pw" style="margin-top:8px">
+      <div><div class="ph"><span class="pl">Labwork Completion</span><span class="pp">${lwPct}%</span></div><div class="pb"><div class="pf ${fc(lwPct)}" style="width:${lwPct}%"></div></div></div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  LESSON PLAN DATA STORE
+// ═══════════════════════════════════════════════════
+const LP_DEF = {topic:'',objectives:'',method:'',mode:'',materials:'',assessment:'',status:'pending',notes:''};
+function lpKey(w){ return `ec1_lp_w${w}`; }
+function ldLp(w){ try{ return Object.assign({},LP_DEF,JSON.parse(localStorage.getItem(lpKey(w)))||{}); }catch{ return Object.assign({},LP_DEF); } }
+function svLp(w,d){ try{ localStorage.setItem(lpKey(w),JSON.stringify(d)); }catch{} }
+
+// Derive roadmap status from lesson plan: a roadmap block is completed if ALL its weeks are completed,
+// in-progress if any are in-progress or some completed, else pending.
+function getRoadmapStatus(wNums){
+  const statuses = wNums.map(w => ldLp(w).status);
+  if(statuses.every(s=>s==='completed')) return 'completed';
+  if(statuses.some(s=>s==='completed'||s==='in-progress')) return 'in-progress';
+  return 'pending';
+}
+
+// ═══════════════════════════════════════════════════
+//  PAGE NAVIGATION
+// ═══════════════════════════════════════════════════
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`[data-page="${id}"]`).classList.add('active');
+  document.getElementById('weekBarWrap').style.display = id==='pgDashboard'?'block':'none';
+  if(id==='pgStudents')   renderStuTable();
+  if(id==='pgAssessment') renderTaskTable();
+  if(id==='pgWorkshop')   { loadWsForm(); renderAllocCards(); renderWsTable(); }
+  if(id==='pgTeaching')   initTeachingPage();
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>goPage(btn.dataset.page));
+});
+
+// ═══════════════════════════════════════════════════
+//  WEEK BUTTONS (Dashboard)
+// ═══════════════════════════════════════════════════
+let activeWeek=1;
+function buildWeekBtns(){
+  const w=document.getElementById('weekBtns'); w.innerHTML='';
+  for(let i=1;i<=14;i++){
+    const b=document.createElement('button');
+    b.className='wbtn'+(i===activeWeek?' active':'');
+    b.textContent=i; b.title=`Week ${i}: ${WEEK_DATA[i-1].topic}`;
+    b.addEventListener('click',()=>{ activeWeek=i; buildWeekBtns(); updateBanner(); buildRoadmap(); });
+    w.appendChild(b);
+  }
+}
+function updateBanner(){
+  const d=WEEK_DATA[activeWeek-1];
+  document.getElementById('wbTitle').textContent=`Week ${activeWeek}`;
+  document.getElementById('wbTopic').textContent=`${d.topic}  ·  ${d.type}`;
+}
+
+// ═══════════════════════════════════════════════════
+//  ROADMAP — status driven by Lesson Plan data
+// ═══════════════════════════════════════════════════
+function sBadge(s){ return s==='completed'?'<span class="badge g">✓ Completed</span>':s==='in-progress'?'<span class="badge a">⏳ In Progress</span>':'<span class="badge r">— Pending</span>'; }
+function buildRoadmap(){
+  const grid=document.getElementById('roadmapGrid'); grid.innerHTML='';
+  ROADMAP.forEach(r=>{
+    const act   = r.wNums.includes(activeWeek);
+    const status= getRoadmapStatus(r.wNums);
+    const el=document.createElement('div');
+    el.className='rm-card'+(act?' act':'');
+    el.style.cursor='pointer';
+    el.title=`Click to open Week ${r.wNums[0]} lesson plan`;
+    el.innerHTML=`<div class="rm-wk">${r.label}</div><div class="rm-tp">${r.topic}</div><div class="rm-ty">${r.type}</div><div class="rm-st">${sBadge(status)}</div>`;
+    el.addEventListener('click',()=>{ goPage('pgTeaching'); selectTpWeek(r.wNums[0]); });
+    grid.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  TEACHING PLAN PAGE
+// ═══════════════════════════════════════════════════
+let tpWeek=1; // currently selected week on Teaching Plan page
+
+function initTeachingPage(){
+  buildTpSidebar();
+  selectTpWeek(tpWeek);
+}
+
+function buildTpSidebar(){
+  const list=document.getElementById('tpWkList'); list.innerHTML='';
+  for(let i=1;i<=14;i++){
+    const d=WEEK_DATA[i-1];
+    const lp=ldLp(i);
+    const dotCls = lp.status==='completed'?'dot-g':lp.status==='in-progress'?'dot-a':'dot-r';
+    const item=document.createElement('div');
+    item.className='tp-wk-item'+(i===tpWeek?' active':'');
+    item.dataset.w=i;
+    item.innerHTML=`
+      <div class="tp-wk-num">${i}</div>
+      <div class="tp-wk-info">
+        <div class="tp-wk-lbl">Week ${i}</div>
+        <div class="tp-wk-topic">${d.topic}</div>
+      </div>
+      <div class="tp-wk-dot ${dotCls}"></div>`;
+    item.addEventListener('click',()=>selectTpWeek(i));
+    list.appendChild(item);
+  }
+}
+
+function selectTpWeek(w){
+  tpWeek=w;
+  // Update sidebar active state
+  document.querySelectorAll('.tp-wk-item').forEach(el=>{
+    el.classList.toggle('active', +el.dataset.w===w);
+  });
+  // Update headings
+  document.getElementById('tpWeekLabel').textContent=`Week ${w}`;
+  document.getElementById('tpClWeekLabel').textContent=`Week ${w}`;
+  // Load lesson plan fields
+  const lp=ldLp(w);
+  document.getElementById('lp_topic').value       = lp.topic       ||WEEK_DATA[w-1].topic;
+  document.getElementById('lp_objectives').value  = lp.objectives  ||'';
+  document.getElementById('lp_method').value      = lp.method      ||'';
+  document.getElementById('lp_mode').value        = lp.mode        ||'';
+  document.getElementById('lp_materials').value   = lp.materials   ||'';
+  document.getElementById('lp_assessment').value  = lp.assessment  ||'';
+  document.getElementById('lp_status').value      = lp.status      ||'pending';
+  document.getElementById('lp_notes').value       = lp.notes       ||'';
+  // Render checklist for this week
+  renderCl(w);
+}
+
+// Save lesson plan
+document.getElementById('lpSave').addEventListener('click',()=>{
+  const d={
+    topic:      document.getElementById('lp_topic').value,
+    objectives: document.getElementById('lp_objectives').value,
+    method:     document.getElementById('lp_method').value,
+    mode:       document.getElementById('lp_mode').value,
+    materials:  document.getElementById('lp_materials').value,
+    assessment: document.getElementById('lp_assessment').value,
+    status:     document.getElementById('lp_status').value,
+    notes:      document.getElementById('lp_notes').value,
+  };
+  svLp(tpWeek,d);
+  buildTpSidebar(); // refresh status dots
+  buildRoadmap();   // sync roadmap on dashboard
+  const m=document.getElementById('lpSaved'); m.style.display='inline';
+  setTimeout(()=>m.style.display='none',2000);
+});
+
+// Reset lesson plan for current week
+document.getElementById('lpReset').addEventListener('click',()=>{
+  svLp(tpWeek,Object.assign({},LP_DEF,{topic:WEEK_DATA[tpWeek-1].topic}));
+  selectTpWeek(tpWeek);
+  buildRoadmap();
+});
+
+// ═══════════════════════════════════════════════════
+//  CHECKLIST (Teaching Plan page, per-week)
+// ═══════════════════════════════════════════════════
+function renderCl(w){
+  const st=ldCl(w), wrap=document.getElementById('clItems'); wrap.innerHTML='';
+  CL_ITEMS.forEach(item=>{
+    const done=!!st[item.id];
+    const el=document.createElement('div');
+    el.className='cl-item'+(done?' checked':'');
+    el.innerHTML=`<div class="cl-chk"><svg class="cl-tick" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="cl-nm">${item.label}</div><div class="cl-dc">${item.desc}</div></div>`;
+    el.addEventListener('click',()=>{ const s=ldCl(w); s[item.id]=!s[item.id]; svCl(w,s); renderCl(w); flashSv(); });
+    wrap.appendChild(el);
+  });
+  updateClProg(w);
+}
+function updateClProg(w){
+  const st=ldCl(w), done=CL_ITEMS.filter(i=>!!st[i.id]).length, pct=Math.round(done/CL_ITEMS.length*100);
+  document.getElementById('clProgLbl').textContent=`Completed ${done} of ${CL_ITEMS.length} items`;
+  document.getElementById('clProgPct').textContent=`${pct}%`;
+  document.getElementById('clFill').style.width=`${pct}%`;
+}
+let _svT;
+function flashSv(){ const m=document.getElementById('savedMsg'); m.style.display='inline'; clearTimeout(_svT); _svT=setTimeout(()=>m.style.display='none',2000); }
+document.getElementById('btnClear').addEventListener('click',()=>{ svCl(tpWeek,{}); renderCl(tpWeek); flashSv(); });
+document.getElementById('btnAll').addEventListener('click',()=>{ const s={}; CL_ITEMS.forEach(i=>s[i.id]=true); svCl(tpWeek,s); renderCl(tpWeek); flashSv(); });
+
+// ═══════════════════════════════════════════════════
+//  MODAL HELPERS (Add / Delete Student)
+// ═══════════════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.closeModal)));
+document.querySelectorAll('.modal-overlay').forEach(ov=>ov.addEventListener('click',e=>{ if(e.target===ov) closeModal(ov.id); }));
+
+// ── Add Student modal ──
+document.getElementById('btnAddStu').addEventListener('click',()=>{
+  ['add_id','add_name','add_rem'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('add_att').value=100;
+  document.getElementById('add_gender').value='M';
+  document.getElementById('add_prac').value='Pending';
+  const err=document.getElementById('addStuErr'); err.style.display='none'; err.textContent='';
+  openModal('modalAddStu');
+});
+document.getElementById('confirmAddStu').addEventListener('click',()=>{
+  const newId  = document.getElementById('add_id').value.trim();
+  const newName= document.getElementById('add_name').value.trim();
+  const err    = document.getElementById('addStuErr');
+  if(!newId||!newName){ err.textContent='Student ID and Full Name are required.'; err.style.display='block'; return; }
+  if(STUDENTS.some(s=>s.id===newId)){ err.textContent=`Student ID "${newId}" already exists. Please use a unique ID.`; err.style.display='block'; return; }
+  STUDENTS.push({
+    id:newId, name:newName,
+    gender: document.getElementById('add_gender').value,
+    attendance: Math.min(100,Math.max(0,+document.getElementById('add_att').value||100)),
+    practical: document.getElementById('add_prac').value,
+    remarks: document.getElementById('add_rem').value.trim(),
+  });
+  MARKS.push({Q1:null,Q2:null,Q3:null,Q4:null,Q5:null,WS1:null,WS2:null,WS3:null,WS4:null,WS5:null,Test:null,Exam:null});
+  LAB.push({group:totalGroups()||1,lw1:null,lw2:null,lw3:null,lw4:null,lw5:null});
+  ss('ec1_stu',STUDENTS); ss('ec1_mrk',MARKS); ss('ec1_lab',LAB);
+  renderCards(); renderStuTable();
+  closeModal('modalAddStu');
+});
+
+// ── Delete Student modal ──
+let _delIdx=-1;
+function openDelModal(idx){
+  _delIdx=idx;
+  document.getElementById('delStuName').textContent=`${STUDENTS[idx].name}  (${STUDENTS[idx].id})`;
+  openModal('modalDelStu');
+}
+document.getElementById('confirmDelStu').addEventListener('click',()=>{
+  if(_delIdx<0) return;
+  STUDENTS.splice(_delIdx,1);
+  MARKS.splice(_delIdx,1);
+  LAB.splice(_delIdx,1);
+  ss('ec1_stu',STUDENTS); ss('ec1_mrk',MARKS); ss('ec1_lab',LAB);
+  _delIdx=-1;
+  renderCards(); renderStuTable();
+  closeModal('modalDelStu');
+});
+
+// ═══════════════════════════════════════════════════
+//  PAGE 2 — STUDENT TABLE
+// ═══════════════════════════════════════════════════
+let stuQ='';
+function renderStuTable(){
+  const q=stuQ.toLowerCase();
+  const rows=STUDENTS.map((s,i)=>({...s,_i:i})).filter(s=>s.name.toLowerCase().includes(q)||s.id.toLowerCase().includes(q));
+  document.getElementById('stuCount').textContent=`Showing ${rows.length} of ${STUDENTS.length} students`;
+  const body=document.getElementById('stuBody'); body.innerHTML='';
+  rows.forEach(s=>{
+    const i=s._i;
+    const opts=['Completed','Pending','Attention'].map(o=>`<option${s.practical===o?' selected':''}>${o}</option>`).join('');
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td style="color:var(--muted);font-size:12px">${i+1}</td>
+      <td><input class="inp-sm" style="width:108px" value="${s.id}" data-f="id" data-i="${i}"/></td>
+      <td><input class="inp-sm" style="width:185px" value="${s.name}" data-f="name" data-i="${i}"/></td>
+      <td><select class="sel-sm" data-f="gender" data-i="${i}"><option${s.gender==='M'?' selected':''}>M</option><option${s.gender==='F'?' selected':''}>F</option></select></td>
+      <td><input class="inp-sm" style="width:62px" type="number" min="0" max="100" value="${s.attendance}" data-f="attendance" data-i="${i}"/></td>
+      <td><select class="sel-sm" data-f="practical" data-i="${i}">${opts}</select></td>
+      <td><input class="inp-sm" style="width:145px" value="${s.remarks||''}" placeholder="optional" data-f="remarks" data-i="${i}"/></td>
+      <td style="display:flex;gap:5px;align-items:center">
+        <button class="row-save" data-i="${i}">Save</button>
+        <button class="row-del"  data-i="${i}" title="Delete student and all related data">🗑</button>
+      </td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('.row-save').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const idx=+btn.dataset.i, row=btn.closest('tr');
+      row.querySelectorAll('[data-f]').forEach(inp=>{ STUDENTS[idx][inp.dataset.f]=inp.value; });
+      ss('ec1_stu',STUDENTS); renderCards();
+      btn.textContent='✓'; setTimeout(()=>btn.textContent='Save',1500);
+    });
+  });
+  body.querySelectorAll('.row-del').forEach(btn=>{
+    btn.addEventListener('click',()=>openDelModal(+btn.dataset.i));
+  });
+}
+document.getElementById('stuSearch').addEventListener('input',e=>{ stuQ=e.target.value; renderStuTable(); });
+
+// ═══════════════════════════════════════════════════
+//  PAGE 3 — ASSESSMENT TABLE
+// ═══════════════════════════════════════════════════
+const MF=['Q1','Q2','Q3','Q4','Q5','WS1','WS2','WS3','WS4','WS5','Test','Exam'];
+let taskQ='';
+function renderTaskTable(){
+  const q=taskQ.toLowerCase();
+  const rows=STUDENTS.map((s,i)=>({...s,_i:i})).filter(s=>s.name.toLowerCase().includes(q)||s.id.toLowerCase().includes(q));
+  document.getElementById('taskCount').textContent=`Showing ${rows.length} of ${STUDENTS.length} students`;
+  const body=document.getElementById('taskBody'); body.innerHTML='';
+  rows.forEach(s=>{
+    const i=s._i, m=MARKS[i];
+    const cells=MF.map(f=>`<td><input class="inp-sm" style="width:42px" type="number" min="0" max="100" placeholder="—" value="${m[f]!==null&&m[f]!==undefined?m[f]:''}" data-mf="${f}" data-i="${i}"/></td>`).join('');
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="color:var(--muted);font-size:12px">${i+1}</td><td><span class="stid">${s.id}</span></td><td style="white-space:nowrap">${s.name}</td>${cells}<td><button class="row-save" data-i="${i}">Save</button></td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('.row-save').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const idx=+btn.dataset.i, row=btn.closest('tr');
+      row.querySelectorAll('[data-mf]').forEach(inp=>{ const v=inp.value.trim(); MARKS[idx][inp.dataset.mf]=v===''?null:Math.min(100,Math.max(0,+v)); });
+      ss('ec1_mrk',MARKS); renderCards();
+      btn.textContent='✓'; setTimeout(()=>btn.textContent='Save',1500);
+    });
+  });
+}
+document.getElementById('taskSearch').addEventListener('input',e=>{ taskQ=e.target.value; renderTaskTable(); });
+
+// ═══════════════════════════════════════════════════
+//  PAGE 4 — WORKSHOP FORM
+// ═══════════════════════════════════════════════════
+function loadWsForm(){
+  document.getElementById('w_labReady').value  =WS.labReady;
+  document.getElementById('w_safety').value    =WS.safety;
+  document.getElementById('w_faults').value    =WS.faults;
+  document.getElementById('w_mmAvail').value   =WS.mmAvail;
+  document.getElementById('w_mmTotal').value   =WS.mmTotal;
+  document.getElementById('w_psAvail').value   =WS.psAvail;
+  document.getElementById('w_psTotal').value   =WS.psTotal;
+  document.getElementById('w_bbAvail').value   =WS.bbAvail;
+  document.getElementById('w_bbTotal').value   =WS.bbTotal;
+  document.getElementById('w_components').value=WS.components;
+}
+document.getElementById('wsSave').addEventListener('click',()=>{
+  WS={
+    labReady:  document.getElementById('w_labReady').value,
+    safety:    document.getElementById('w_safety').value,
+    faults:   +document.getElementById('w_faults').value,
+    mmAvail:  +document.getElementById('w_mmAvail').value,
+    mmTotal:  +document.getElementById('w_mmTotal').value,
+    psAvail:  +document.getElementById('w_psAvail').value,
+    psTotal:  +document.getElementById('w_psTotal').value,
+    bbAvail:  +document.getElementById('w_bbAvail').value,
+    bbTotal:  +document.getElementById('w_bbTotal').value,
+    components:document.getElementById('w_components').value,
+  };
+  ss('ec1_ws',WS); renderCards();
+  const m=document.getElementById('wsSaved'); m.style.display='inline';
+  setTimeout(()=>m.style.display='none',2000);
+});
+document.getElementById('wsReset').addEventListener('click',()=>{ WS={...WS_DEF}; ss('ec1_ws',WS); loadWsForm(); renderCards(); });
+
+// ═══════════════════════════════════════════════════
+//  PAGE 4 — GROUP ALLOCATION
+// ═══════════════════════════════════════════════════
+function renderAllocCards(){
+  const tg=totalGroups();
+  const meta=document.getElementById('allocMeta');
+  meta.textContent=`${STUDENTS.length} students allocated across ${tg} group${tg!==1?'s':''}. Click "Reassign" on any student to move them to a different group.`;
+  const container=document.getElementById('allocCards'); container.innerHTML='';
+  for(let g=1;g<=tg;g++){
+    const members=STUDENTS.map((s,i)=>({...s,_i:i})).filter((_,ii)=>groupOf(ii)===g);
+    const card=document.createElement('div');
+    card.className='alloc-grp-card';
+    card.innerHTML=`<div class="alloc-grp-card-hdr"><span>Group ${g}</span><span style="opacity:.7;font-weight:400">${members.length} student${members.length!==1?'s':''}</span></div>
+      <div class="alloc-grp-card-body" id="allocGrp${g}"></div>`;
+    container.appendChild(card);
+    const body=card.querySelector(`#allocGrp${g}`);
+    if(members.length===0){
+      body.innerHTML=`<div class="alloc-empty">No students assigned</div>`;
+    } else {
+      members.forEach(s=>{
+        const row=document.createElement('div');
+        row.className='alloc-stu-row';
+        row.innerHTML=`<div style="flex:1;min-width:0"><div class="alloc-stu-name" title="${s.name}">${s.name}</div><div class="alloc-stu-id">${s.id}</div></div>
+          <button class="alloc-btn-reassign" data-i="${s._i}">Move</button>`;
+        body.appendChild(row);
+      });
+    }
+  }
+  // Wire up Move buttons
+  container.querySelectorAll('.alloc-btn-reassign').forEach(btn=>{
+    btn.addEventListener('click',()=>openReassignModal(+btn.dataset.i));
+  });
+}
+
+// Auto-assign groups sequentially
+document.getElementById('btnAutoAlloc').addEventListener('click',()=>{
+  const size=+document.getElementById('allocGroupSize').value||3;
+  STUDENTS.forEach((_,i)=>{ LAB[i].group=Math.floor(i/size)+1; });
+  ss('ec1_lab',LAB);
+  renderAllocCards();
+  renderWsTable();
+});
+
+// Clear all group assignments (set all to group 1)
+document.getElementById('btnClearAlloc').addEventListener('click',()=>{
+  if(!confirm('Clear all group assignments? All students will be moved to Group 1.')) return;
+  STUDENTS.forEach((_,i)=>{ LAB[i].group=1; });
+  ss('ec1_lab',LAB);
+  renderAllocCards();
+  renderWsTable();
+});
+
+// ─── Reassign modal ───
+let _reassignIdx=-1;
+function openReassignModal(idx){
+  _reassignIdx=idx;
+  document.getElementById('reassignStuName').textContent=`${STUDENTS[idx].name}  (${STUDENTS[idx].id})`;
+  const sel=document.getElementById('reassignGroupSel'); sel.innerHTML='';
+  const tg=totalGroups();
+  for(let g=1;g<=tg;g++){
+    const opt=document.createElement('option'); opt.value=g; opt.textContent=`Group ${g}`;
+    if(g===LAB[idx].group) opt.selected=true;
+    sel.appendChild(opt);
+  }
+  // Also allow creating a new group
+  const newGrpOpt=document.createElement('option'); newGrpOpt.value=tg+1; newGrpOpt.textContent=`New Group ${tg+1}`;
+  sel.appendChild(newGrpOpt);
+  document.getElementById('reassignErr').style.display='none';
+  openModal('modalReassign');
+}
+document.getElementById('confirmReassign').addEventListener('click',()=>{
+  if(_reassignIdx<0) return;
+  const newGrp=+document.getElementById('reassignGroupSel').value;
+  LAB[_reassignIdx].group=newGrp;
+  ss('ec1_lab',LAB);
+  _reassignIdx=-1;
+  closeModal('modalReassign');
+  renderAllocCards();
+  renderWsTable();
+});
+
+// ═══════════════════════════════════════════════════
+//  PAGE 4 — LABWORK MARKS TABLE
+// ═══════════════════════════════════════════════════
+const LW_FIELDS=['lw1','lw2','lw3','lw4','lw5'];
+
+let wsQ='';
+function lwAvg(lb){
+  const vals=LW_FIELDS.map(f=>lb[f]).filter(v=>v!==null&&v!==undefined&&v!=='');
+  if(!vals.length) return null;
+  return (vals.reduce((a,b)=>a+ +b,0)/vals.length).toFixed(1);
+}
+
+function renderWsTable(){
+  const q=wsQ.toLowerCase();
+  const body=document.getElementById('wsBody'); body.innerHTML='';
+  let shownCount=0;
+  const tg=totalGroups();
+  for(let g=1;g<=tg;g++){
+    const members=STUDENTS.map((s,i)=>({...s,_i:i})).filter((_,ii)=>groupOf(ii)===g);
+    const filteredMembers=members.filter(s=>q===''||s.name.toLowerCase().includes(q)||s.id.toLowerCase().includes(q)||`group ${g}`.includes(q)||`kumpulan ${g}`.includes(q));
+    if(filteredMembers.length===0) continue;
+    shownCount+=filteredMembers.length;
+    const hdr=document.createElement('tr');
+    hdr.className='grp-hdr-row';
+    hdr.innerHTML=`<td colspan="10">Group ${g} &nbsp;—&nbsp; Lab Bench ${g} &nbsp;(${members.length} Student${members.length!==1?'s':''})</td>`;
+    body.appendChild(hdr);
+    filteredMembers.forEach(s=>{
+      const i=s._i, lb=LAB[i];
+      const avg=lwAvg(lb);
+      const avgHtml=avg!==null?`<span class="lw-avg-cell">${avg}</span>`:`<span style="color:var(--muted);font-size:11px">—</span>`;
+      const lwCells=LW_FIELDS.map((f,fi)=>`<td><input class="inp-sm" style="width:48px" type="number" min="0" max="20" placeholder="—" value="${lb[f]!==null&&lb[f]!==undefined?lb[f]:''}" data-lf="${f}" data-i="${i}" title="Labwork ${fi+1} (max 20)"/></td>`).join('');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td><span class="grp-badge">Grp ${g}</span></td>
+        <td><span class="stid">${s.id}</span></td>
+        <td style="white-space:nowrap;min-width:155px">${s.name}</td>
+        ${lwCells}
+        <td id="avg_${i}">${avgHtml}</td>
+        <td><button class="row-save" data-i="${i}">Save</button></td>`;
+      body.appendChild(tr);
+    });
+  }
+  document.getElementById('wsCount').textContent=`Showing ${shownCount} of ${STUDENTS.length} students`;
+  body.querySelectorAll('.row-save').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const idx=+btn.dataset.i, row=btn.closest('tr');
+      row.querySelectorAll('[data-lf]').forEach(inp=>{
+        const v=inp.value.trim();
+        LAB[idx][inp.dataset.lf]=v===''?null:Math.min(20,Math.max(0,+v));
+      });
+      ss('ec1_lab',LAB);
+      // Refresh avg cell
+      const avg=lwAvg(LAB[idx]);
+      const avgCell=document.getElementById(`avg_${idx}`);
+      if(avgCell) avgCell.innerHTML=avg!==null?`<span class="lw-avg-cell">${avg}</span>`:`<span style="color:var(--muted);font-size:11px">—</span>`;
+      btn.textContent='✓'; setTimeout(()=>btn.textContent='Save',1500);
+    });
+  });
+}
+document.getElementById('wsSearch').addEventListener('input',e=>{ wsQ=e.target.value; renderWsTable(); });
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+renderCards();
+buildWeekBtns();
+updateBanner();
+buildRoadmap();
+document.getElementById('weekBarWrap').style.display='block';
+</script>
+</body>
+</html>
